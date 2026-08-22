@@ -1,0 +1,16 @@
+{
+  "name": "Forgelifting",
+  "short_name": "Forgelifting",
+  "description": "Planificador de entrenamiento de powerlifting por Omar",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#15161b",
+  "theme_color": "#15161b",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ]
+}
