@@ -376,6 +376,12 @@
     routineState[currentWeek].feedback.valoracion = val;
     renderWeek(currentWeek);
     triggerSave();
+  // Registrar Service Worker para PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error:', err));
+    });
+  }
   });
 </script>
 </body>
