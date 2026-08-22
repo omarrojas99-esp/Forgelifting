@@ -207,26 +207,41 @@
 
   // --- Auth Events ---
   document.getElementById('btnLogin').addEventListener('click', async () => {
-    authError.style.display='none';
+    authError.style.display = 'none';
     const email = document.getElementById('emailInput').value.trim();
     const pass = document.getElementById('passwordInput').value.trim();
-    if(!email || !pass) { authError.innerText = "Ingresa correo y contraseña."; authError.style.display='block'; return; }
-    try { await signInWithEmailAndPassword(auth, email, pass); } 
-    catch(err) { authError.innerText = "Error: Credenciales incorrectas."; authError.style.display='block'; }
+    
+    if (!email || !pass) { 
+      authError.innerText = "Ingresa correo y contraseña."; 
+      authError.style.display = 'block'; 
+      return; 
+    }
+
+    try { 
+      await signInWithEmailAndPassword(auth, email, pass); 
+    } catch(err) { 
+      authError.innerText = "Error: Credenciales incorrectas."; 
+      authError.style.display = 'block'; 
+    }
   });
 
   document.getElementById('btnRegister').addEventListener('click', async () => {
-    authError.style.display='none';
-    const email = document.getElementById('emailInput'].value.trim();
+    authError.style.display = 'none';
+    const email = document.getElementById('emailInput').value.trim();
     const pass = document.getElementById('passwordInput').value.trim();
-    if(!email || !pass) { authError.innerText = "Ingresa correo y contraseña."; authError.style.display='block'; return; }
+
+    if (!email || !pass) { 
+      authError.innerText = "Ingresa correo y contraseña."; 
+      authError.style.display = 'block'; 
+      return; 
+    }
 
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, pass);
       await setDoc(doc(db, "users", userCred.user.uid), { email: email, name: email.split('@')[0], role: "athlete" });
     } catch(err) { 
       authError.innerText = "Error al crear cuenta: " + err.message; 
-      authError.style.display='block'; 
+      authError.style.display = 'block'; 
     }
   });
 
