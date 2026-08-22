@@ -1,329 +1,554 @@
-html_code = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#15161b">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgelifting - Powerlifting & Fuerza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #121418;
+      --card-bg: #1c1f26;
+      --accent-gold: #ffb703;
+      --accent-gold-hover: #e0a000;
+      --text-light: #f1f1f1;
+      --text-muted: #a0a5b5;
+      --border-color: #2a2e39;
+      --danger-red: #e63946;
+    }
 
-<title>Forgelifting</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --ink:#15161b; --panel:#1d1f26; --steel:#2e313a; --chalk:#ece8e0;
-    --chalk-dust:#8d8f9a; --plate-blue:#5089b0; --plate-yellow:#c9a13f; --plate-red:#b3483f; --gold:#d4af37;
-  }
-  *{box-sizing:border-box;}
-  body{ margin:0; background:var(--ink); color:var(--chalk); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; min-height:100vh; }
-  
-  /* Auth Screen */
-  #auth-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; text-align: center; }
-  .auth-box { background: var(--panel); border: 1px solid var(--steel); border-radius: 10px; padding: 30px; width: 100%; max-width: 400px; }
-  .auth-logo { width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--gold); margin-bottom: 15px; object-fit:cover; }
-  .auth-box h1 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--chalk); margin: 0 0 20px; letter-spacing: 0.05em; }
-  .auth-box input { width: 100%; margin-bottom: 15px; padding: 12px; background: var(--ink); border: 1px solid var(--steel); color: var(--chalk); border-radius: 6px; }
-  .btn-auth { width: 100%; background: var(--gold); color: var(--ink); border: none; padding: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; margin-bottom: 10px; font-size: 15px; }
-  .btn-auth-sec { width: 100%; background: transparent; color: var(--chalk-dust); border: 1px solid var(--steel); padding: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; font-size: 15px; }
-  .auth-error { color: var(--plate-red); font-size: 13px; margin-bottom: 15px; display: none; word-break: break-word; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* App Layout */
-  #app-screen { display: none; max-width:1180px; margin:0 auto; padding:28px 20px 50px; }
-  
-  .brand-container { display: flex; align-items: center; gap: 14px; }
-  .brand-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
-  .brand-eyebrow { display: block; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 2px; }
-  .brand h1 { font-family: 'Bebas Neue', sans-serif; font-size: 38px; letter-spacing: .03em; margin: 0; line-height: 1; text-transform: uppercase; }
-  
-  .header-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
-  .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;}
-  
-  .main-nav { display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--steel); padding-bottom: 10px; flex-wrap: wrap; }
-  .main-nav-btn { background: transparent; border: none; color: var(--chalk-dust); font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: .05em; padding: 4px 12px; cursor: pointer; transition: all 0.2s; border-radius: 4px; }
-  .main-nav-btn:hover { color: var(--chalk); }
-  .main-nav-btn.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
 
-  input,textarea,select{ background:var(--ink);border:1px solid var(--steel);color:var(--chalk); border-radius:6px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:13.5px;width:100%; }
-  input[readonly], textarea[readonly] { opacity: 0.75; cursor: not-allowed; border-color: transparent; }
-  textarea{resize:vertical;}
-  .mono-input{font-family:'JetBrains Mono',monospace;}
-  .btn-logout { background: transparent; border: 1px solid var(--plate-red); color: var(--plate-red); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 2px solid var(--accent-gold);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
 
-  /* Coach Panel */
-  .coach-panel { background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: none; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .coach-panel select { max-width: 220px; border-color: var(--gold); }
-  .btn-danger { background: transparent; border: 1px solid var(--plate-red); color: var(--plate-red); padding: 7px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
-  .btn-secondary-action { background: var(--steel); border: none; color: var(--chalk); padding: 7px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-  /* Lifts & Weeks */
-  .week-tabs{display:flex;gap:10px;overflow-x:auto;padding:10px 0;margin-bottom:10px;}
-  .week-tab{background:transparent;border:none;cursor:pointer;padding:2px;flex:0 0 auto; opacity:0.6;}
-  .week-tab.active{opacity:1;}
-  .week-tab-ring{ width:44px;height:44px;border-radius:50%; background:var(--steel); display:flex;align-items:center;justify-content:center; }
-  .week-tab.active .week-tab-ring{ background: var(--gold); }
-  .week-tab-num{ width:36px;height:36px;border-radius:50%;background:var(--panel); display:flex;align-items:center;justify-content:center; font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--chalk); }
-  
-  .lifts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-bottom:18px;}
-  .lift-card{ --lift-color:var(--steel); background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--lift-color); border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px; }
-  .lift-card.lift-blue{--lift-color:var(--plate-blue);}
-  .lift-card.lift-yellow{--lift-color:var(--plate-yellow);}
-  .lift-card.lift-red{--lift-color:var(--plate-red);}
-  .lift-card-header{display:flex;align-items:center;gap:10px;}
-  .lift-icon svg{width:28px;height:28px;color:var(--lift-color);display:block;}
-  .lift-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.05em;text-transform:uppercase;color:var(--lift-color);margin:0;}
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+      font-size: 20px;
+      box-shadow: 0 0 10px rgba(255, 183, 3, 0.4);
+    }
 
-  .field-group{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-  .field-group-2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-  .field label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--chalk-dust);font-weight:600;margin-bottom:4px;}
+    .brand-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: #fff;
+      text-transform: uppercase;
+    }
 
-  /* Accesorios por movimiento */
-  .accessories-section { border-top: 1px dashed var(--steel); padding-top: 12px; margin-top: 4px; }
-  .accessories-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .accessories-header span { font-size: 11px; text-transform: uppercase; color: var(--gold); font-weight: 700; letter-spacing: 0.05em; }
-  .btn-add-acc { background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold); color: var(--gold); padding: 3px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: 600; }
-  .acc-row { display: grid; grid-template-columns: 1fr 60px 60px 28px; gap: 6px; align-items: center; margin-bottom: 6px; }
-  .btn-del-acc { background: transparent; border: 1px solid var(--plate-red); color: var(--plate-red); border-radius: 4px; cursor: pointer; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+    .brand-subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-gold);
+      margin-left: 10px;
+      letter-spacing: 0.5px;
+    }
 
-  .feedback-card{background:var(--panel);border:1px solid var(--steel);border-radius:10px;padding:20px;margin-top:15px;}
-  .rating-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
-  .plate-rating{display:flex;gap:8px;}
-  .plate-btn{width:26px;height:26px;border-radius:50%;border:2px solid var(--steel);background:transparent;cursor:pointer;padding:0;}
-  .plate-btn.filled{background:var(--gold);border-color:var(--gold);}
-  
-  .save-indicator{font-size:12px;color:var(--gold);font-weight:600;}
+    .coach-panel {
+      background: #17191e;
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-  /* Tablas de Reglamento IPF */
-  .rule-card { background: var(--panel); border: 1px solid var(--steel); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-  .rule-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--gold); margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--steel); padding-bottom: 8px; }
-  .ipf-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
-  .ipf-table th, .ipf-table td { border: 1px solid var(--steel); padding: 10px 12px; vertical-align: top; }
-  .ipf-table th { background: rgba(0,0,0,0.3); font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.05em; }
-  .badge-card { display: inline-block; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; text-transform: uppercase; color: #fff; }
-  .badge-red { background: var(--plate-red); }
-  .badge-blue { background: var(--plate-blue); }
-  .badge-yellow { background: var(--plate-yellow); color: #000; }
+    .coach-panel select, .coach-panel input {
+      background: var(--bg-color);
+      color: #fff;
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
 
-  /* Calculadoras */
-  .calc-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .calc-card { background: var(--panel); border: 1px solid var(--steel); border-radius: 10px; padding: 20px; }
-  .calc-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 15px; }
-  .calc-res-box { background: var(--ink); border: 1px solid var(--steel); border-radius: 6px; padding: 12px; text-align: center; margin-top: 15px; }
-  .calc-res-val { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: bold; color: var(--gold); }
+    .btn {
+      background: var(--accent-gold);
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
 
-  /* Biblioteca de Accesorios (Fase 3) */
-  .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-  .exercise-card { background: var(--panel); border: 1px solid var(--steel); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-  .exercise-card h4 { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--gold); margin: 0 0 8px; }
-  .exercise-card p { font-size: 12.5px; color: var(--chalk-dust); margin: 0 0 12px; line-height: 1.4; }
-  .exercise-tag { display: inline-block; background: var(--steel); color: var(--chalk); font-size: 10px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; margin-bottom: 8px; }
-  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; background: #000; }
-  .video-container iframe { position: absolute; top:0; left: 0; width: 100%; height: 100%; border:0; }
-</style>
+    .btn:hover {
+      background: var(--accent-gold-hover);
+    }
+
+    .btn-danger {
+      background: var(--danger-red);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: #c12a36;
+    }
+
+    nav {
+      background-color: var(--card-bg);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .nav-btn.active, .nav-btn:hover {
+      color: var(--accent-gold);
+      border-bottom-color: var(--accent-gold);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .section-block {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      color: var(--accent-gold);
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sub-section {
+      background: #16181f;
+      border-left: 4px solid var(--accent-gold);
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .sub-section h4 {
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    /* Grid de Calculadoras */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .calc-card {
+      background: #16181f;
+      padding: 20px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .calc-card h3 {
+      color: var(--accent-gold);
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      background: var(--bg-color);
+      color: #fff;
+      border: 1px solid var(--border-color);
+      padding: 8px;
+      border-radius: 4px;
+    }
+
+    .result-box {
+      margin-top: 15px;
+      padding: 10px;
+      background: var(--card-bg);
+      border-radius: 4px;
+      border-left: 3px solid var(--accent-gold);
+      font-weight: bold;
+    }
+
+    /* Grid de Biblioteca de Ejercicios (Con Imágenes) */
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .exercise-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .exercise-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .exercise-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background-color: #2a2e39;
+    }
+
+    .exercise-info {
+      padding: 15px;
+    }
+
+    .exercise-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .exercise-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Grid de Eventos */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .event-card {
+      background: var(--card-bg);
+      border-left: 5px solid var(--accent-gold);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    .event-date {
+      font-size: 12px;
+      font-weight: bold;
+      background: var(--accent-gold);
+      color: #000;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .event-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .event-location {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- PANTALLA AUTH -->
-<div id="auth-screen">
-  <div class="auth-box">
-    <img src="logo.png" alt="Logo" class="auth-logo" onerror="this.style.display='none'">
-    <h1>Forgelifting</h1>
-    <div id="authError" class="auth-error"></div>
-    <input type="email" id="emailInput" placeholder="Correo electrónico" required>
-    <input type="password" id="passwordInput" placeholder="Contraseña" required>
-    <button id="btnLogin" class="btn-auth">Iniciar Sesión</button>
-    <button id="btnRegister" class="btn-auth-sec">Registrarme como Atleta</button>
-  </div>
-</div>
-
-<!-- APP PRINCIPAL -->
-<div id="app-screen">
-  
-  <header class="header-top">
+  <header>
     <div class="brand-container">
-      <img src="logo.png" alt="Forgelifting Logo" class="brand-logo" onerror="this.style.display='none'">
-      <div class="brand">
-        <span class="brand-eyebrow">Powerlifting</span>
-        <h1>Forgelifting</h1>
+      <div class="brand-logo">FL</div>
+      <div>
+        <span class="brand-title">Powerlifting Forgelifting</span>
+        <span class="brand-subtitle">Lo mejor para Powerlifting y Fuerza</span>
       </div>
     </div>
-    <div class="header-controls">
-      <span id="userEmailDisplay" style="font-size: 13px; color: var(--chalk-dust);"></span>
-      <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+
+    <!-- PANEL DEL ENTRENADOR (Visible solo para ADMIN_EMAIL) -->
+    <div class="coach-panel" id="coach-panel" style="display: none;">
+      <strong>Panel Entrenador:</strong>
+      <select id="athlete-select" onchange="loadAthleteData()">
+        <option value="">Selecciona un atleta...</option>
+      </select>
+      <input type="text" id="athlete-name-input" placeholder="Nombre/Alias del atleta">
+      <button class="btn" onclick="saveAthleteName()">Actualizar Nombre</button>
+      <button class="btn btn-danger" onclick="deleteAthlete()">Eliminar Atleta</button>
     </div>
   </header>
 
-  <!-- PANEL ENTRENADOR -->
-  <div id="coachPanel" class="coach-panel">
-    <strong style="color: var(--gold); font-size: 14px;">PANEL ENTRENADOR</strong>
-    <select id="athleteSelect">
-      <option value="">Cargando atletas...</option>
-    </select>
-    <input type="text" id="editAthleteName" placeholder="Nombre/Alias del atleta" style="max-width: 180px; padding: 6px 10px;">
-    <button id="btnUpdateName" class="btn-secondary-action">Actualizar Nombre</button>
-    <button id="btnDeleteAthlete" class="btn-danger">Dar de baja</button>
-    <span id="saveIndicator" class="save-indicator"></span>
-  </div>
-
-  <nav class="main-nav">
-    <button class="main-nav-btn active" data-target="planification">Planificación</button>
-    <button class="main-nav-btn" data-target="rules">Reglamento IPF</button>
-    <button class="main-nav-btn" data-target="calculators">Calculadoras</button>
-    <button class="main-nav-btn" data-target="library">Biblioteca de Accesorios</button>
+  <nav>
+    <button class="nav-btn active" onclick="switchTab('planificacion', event)">PLANIFICACIÓN</button>
+    <button class="nav-btn" onclick="switchTab('reglamento', event)">REGLAMENTO IPF</button>
+    <button class="nav-btn" onclick="switchTab('calculadoras', event)">CALCULADORAS</button>
+    <button class="nav-btn" onclick="switchTab('biblioteca', event)">BIBLIOTECA DE ACCESORIOS</button>
+    <button class="nav-btn" onclick="switchTab('eventos', event)">PRÓXIMOS EVENTOS</button>
   </nav>
 
-  <!-- SECCIÓN PLANIFICACIÓN -->
-  <div id="sec-planification" class="app-section">
-    <nav class="week-tabs" id="weekTabs"></nav>
-    <main id="weekContent" style="margin-top: 10px;"></main>
-  </div>
-
-  <!-- SECCIÓN REGLAMENTO IPF -->
-  <div id="sec-rules" class="app-section" style="display: none;">
-    <div class="rule-card">
-      <h2>Reglamento Técnico IPF - Infracciones y Tarjetas de Faltas</h2>
-      <p style="font-size: 13px; color: var(--chalk-dust); margin-bottom: 20px;">
-        Causas oficiales de intento nulo e infracciones clasificadas por color de tarjeta según la normativa técnica de la International Powerlifting Federation (IPF).
-      </p>
-      <div style="overflow-x: auto;">
-        <table class="ipf-table">
-          <thead>
-            <tr>
-              <th style="width: 150px;">Tarjeta</th>
-              <th style="width: 30%;">Sentadilla (Squat)</th>
-              <th style="width: 30%;">Press Banca (Bench Press)</th>
-              <th style="width: 30%;">Peso Muerto (Deadlift)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge-card badge-red">1 ROJA</span></td>
-              <td>
-                • Falla al flexionar las rodillas y descender el cuerpo hasta que la superficie superior de las piernas en la articulación de la cadera esté por debajo del tope superior de las rodillas.
-              </td>
-              <td>
-                • La barra no se baja al pecho, o al área abdominal, es decir no ha alcanzado el pecho o el área abdominal, o está tocando el cinturón.<br><br>
-                • Faltar al bajar la parte inferior del nivel de ambas articulaciones del codo con o debajo de la superficie superior de cada articulación del hombro respectivo.
-              </td>
-              <td>
-                • Falla en el bloqueo de las rodillas a la finalización del levantamiento.<br><br>
-                • El haz frontal del músculo deltoides debe colocarse detrás de la proyección imaginaria de la barra.<br><br>
-                • Faltar al mantenerse en posición erecta.
-              </td>
-            </tr>
-            <tr>
-              <td><span class="badge-card badge-blue">2 AZUL</span></td>
-              <td>
-                • Falla al asumir una posición erecta con las rodillas bloqueadas al comienzo o a la finalización del levantamiento.<br><br>
-                • Doble rebote o más de un intento de recobro en la parte inferior del levantamiento. O cualquier movimiento de descenso durante el ascenso.
-              </td>
-              <td>
-                • Cualquier movimiento descendente de toda la barra durante el momento de empuje.<br><br>
-                • Fallar al empujar la barra a la extensión de los brazos rectos y codos bloqueados en la realización del levantamiento.<br><br>
-                • <span style="color:#e57373;">Falla en el bloqueo de los brazos antes del comando "START"</span>.
-              </td>
-              <td>
-                • Cualquier movimiento de descenso de la barra antes de alcanzar la posición final. Si la barra se acomoda cuando los hombros retroceden, esto no es causa de descalificación.<br><br>
-                • Apoyar la barra sobre los muslos durante el desarrollo del levantamiento. Si la barra avanza ligeramente sobre los muslos, pero estos no la soportan, esto no es causa de descalificación.
-              </td>
-            </tr>
-            <tr>
-              <td><span class="badge-card badge-yellow">3 AMARILLA</span></td>
-              <td>
-                • Dar un paso hacia delante o atrás o moviendo el pie lateralmente. El balanceo entre la punta y talón es permitido.<br><br>
-                • Fallar en cumplir con las señales del referee central al comienzo o a la finalización de un levantamiento.<br><br>
-                • Contacto con la barra o con el levantador por parte de los ayudantes cargadores entre las indicaciones del referee central.<br><br>
-                • Contacto de los codos o brazos con las piernas, que haya sido de ayuda o soporte para el levantador. Un ligero contacto que no haya sido de ayuda puede ser ignorado.<br><br>
-                • Cualquier caída o vuelco de la barra luego de finalizado el levantamiento.<br><br>
-                • Falia en el cumplimiento de cualquiera de los requerimientos contenidos en la descripción general del levantamiento que precede esta lista de descalificaciones.<br><br>
-                • Levantamiento incompleto.
-              </td>
-              <td>
-                • <span style="color:#e57373;">Hundir</span> la barra luego de haberla detenido en el pecho, o el área abdominal, de una manera que ayude al levantador.<br><br>
-                • Falia al no respetar las órdenes del referee central al comenzar, durante o al finalizar el ejercicio.<br><br>
-                • <span style="color:#e57373;">Utilizar el empuje de la parte superior del cuerpo para iniciar el movimiento ascendente de la barra desde el pecho.</span><br><br>
-                • Cualquier cambio en la posición elegida durante la ejecución del levantamiento, es decir: cualquier movimiento de subida de la cabeza, hombros, glúteos, de la posición original en los puntos de contacto con el banco, o movimientos laterales de las manos en la barra.<br><br>
-                • Contacto con la barra por parte de los ayudantes / cargadores a partir de las indicaciones del referee central para hacer el levantamiento más fácil.<br><br>
-                • Cualquier contacto de los pies del levantador con el banco o soportes.<br><br>
-                • Un deliberado contacto de la barra con los soportes del banco durante el levantamiento facilitando el movimiento de empuje.<br><br>
-                • Falia en el cumplimiento de cualquiera de los requerimientos contenidos en la descripción general del levantamiento que precede esta lista de descalificaciones.<br><br>
-                • Levantamiento incompleto.
-              </td>
-              <td>
-                • Descender la barra antes de recibir la orden del referee central.<br><br>
-                • Permitir que la barra vuelva a la plataforma sin mantener el control con ambas manos, es decir soltando la barra de la palma de las manos.<br><br>
-                • Caminar hacia atrás o hacia delante, o mover el pie lateralmente. Meciendo los pies entre punta y talón está permitido. Mover el pie después de la orden "Down" no debe ser causa de movimiento nulo.<br><br>
-                • Falla de cumplir con cualquiera de los requerimientos contenidos en la descripción general del levantamiento que precede esta lista de descalificaciones.<br><br>
-                • Levantamiento incompleto.
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <main>
+    <!-- TAB PLANIFICACIÓN -->
+    <div id="planificacion" class="tab-content active">
+      
+      <!-- Bloque Sentadilla -->
+      <div class="section-block">
+        <div class="section-title">
+          <span>SENTADILLA (SQUAT)</span>
+        </div>
+        <div>
+          <p><strong>Día Principal:</strong> Trabajo de sobrecarga técnica y series efectivas pesadas.</p>
+        </div>
+        <div class="sub-section">
+          <h4>Días Secundarios y Variaciones:</h4>
+          <p class="exercise-desc">• Sentadilla con Pausa (3 seg) / Sentadilla Tempo (3-0-3)<br>• Sentadilla Frontal o Pin Squat para refuerzo de torso y cuadriceps.</p>
+        </div>
       </div>
+
+      <!-- Bloque Press de Banco -->
+      <div class="section-block">
+        <div class="section-title">
+          <span>PRESS DE BANCO (BENCH PRESS)</span>
+        </div>
+        <div>
+          <p><strong>Día Principal:</strong> Enfoque en volumen e intensidad de competición.</p>
+        </div>
+        <div class="sub-section">
+          <h4>Días Secundarios y Variaciones:</h4>
+          <p class="exercise-desc">• Larsen Press / Spoto Press (control de parada)<br>• Press de Banco con Agarre Cerrado (fuerza de tríceps).</p>
+        </div>
+      </div>
+
+      <!-- Bloque Peso Muerto -->
+      <div class="section-block">
+        <div class="section-title">
+          <span>PESO MUERTO (DEADLIFT)</span>
+        </div>
+        <div>
+          <p><strong>Día Principal:</strong> Patrón de tracción pesado y calibración de lockout.</p>
+        </div>
+        <div class="sub-section">
+          <h4>Días Secundarios y Variaciones:</h4>
+          <p class="exercise-desc">• Peso Muerto Deficit (1-2 pulgadas) / Peso Muerto Pausado debajo de rodilla<br>• Peso Muerto Rumano (RDL) o Buenos Días para cadena posterior.</p>
+        </div>
+      </div>
+
     </div>
-  </div>
 
-  <!-- SECCIÓN CALCULADORAS -->
-  <div id="sec-calculators" class="app-section" style="display: none;">
-    <div class="calc-container">
-      <div class="calc-card">
-        <h3>Calculadora de Coeficientes IPF</h3>
-        <div class="field" style="margin-bottom: 12px;">
-          <label>Sexo</label>
-          <select id="calcGender">
-            <option value="male">Masculino</option>
-            <option value="female">Femenino</option>
-          </select>
+    <!-- TAB REGLAMENTO IPF -->
+    <div id="reglamento" class="tab-content">
+      <div class="section-block">
+        <div class="section-title">REGLAMENTO Y ÓRDENES IPF</div>
+        <div class="sub-section">
+          <h4>Sentadilla:</h4>
+          <p class="exercise-desc"><strong>Órdenes:</strong> "Squat" (Inicio) y "Rack" (Guardar). Profundidad requerida: La superficie superior de las piernas en la articulación de la cadera debe estar por debajo de la parte superior de las rodillas.</p>
         </div>
-        <div class="field" style="margin-bottom: 12px;">
-          <label>Peso Corporal (kg)</label>
-          <input type="number" id="calcBw" placeholder="Ej. 83.5" step="0.1">
+        <div class="sub-section">
+          <h4>Press de Banco:</h4>
+          <p class="exercise-desc"><strong>Órdenes:</strong> "Start" (Iniciar), "Press" (Empujar tras la pausa en el pecho) y "Rack" (Guardar). Los glúteos y la cabeza deben permanecer apoyados según las normas vigentes.</p>
         </div>
-        <div class="field" style="margin-bottom: 15px;">
-          <label>Total Levantado (kg)</label>
-          <input type="number" id="calcTotal" placeholder="Ej. 650.0" step="0.5">
-        </div>
-        <button type="button" id="btnCalculate" class="btn-auth" style="margin-bottom: 0;">Calcular Coeficientes</button>
-
-        <div class="calc-res-box">
-          <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Puntos DOTS</div>
-          <div class="calc-res-val" id="resDots">0.00</div>
-        </div>
-        <div class="calc-res-box">
-          <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Puntos Wilks</div>
-          <div class="calc-res-val" id="resWilks">0.00</div>
-        </div>
-        <div class="calc-res-box">
-          <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">IPF GL Points</div>
-          <div class="calc-res-val" id="resGL">0.00</div>
+        <div class="sub-section">
+          <h4>Peso Muerto:</h4>
+          <p class="exercise-desc"><strong>Órdenes:</strong> Ninguna orden para iniciar. Orden "Down" (Abajo) una vez completada la extensión de rodillas, cadera y hombros erguidos.</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- SECCIÓN BIBLIOTECA DE ACCESORIOS (FASE 3) -->
-  <div id="sec-library" class="app-section" style="display: none;">
-    <div style="margin-bottom: 20px;">
-      <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--gold); margin: 0 0 5px;">Biblioteca de Ejercicios Accesorios</h2>
-      <p style="font-size: 13px; color: var(--chalk-dust); margin: 0;">Guía biomecánica y tutoriales en video para la selección técnica de variantes y accesorios.</p>
+    <!-- TAB CALCULADORAS -->
+    <div id="calculadoras" class="tab-content">
+      <div class="section-block">
+        <div class="section-title">CALCULADORAS DE FUERZA Y COEFICIENTES</div>
+        
+        <div class="calc-grid">
+          <!-- Calculadora 1RM y RPE -->
+          <div class="calc-card">
+            <h3>Calculadora de 1RM Estimado</h3>
+            <div class="form-group">
+              <label>Peso Levantado (kg):</label>
+              <input type="number" id="rm-weight" placeholder="Ej: 140">
+            </div>
+            <div class="form-group">
+              <label>Repeticiones Realizadas:</label>
+              <input type="number" id="rm-reps" placeholder="Ej: 5">
+            </div>
+            <button class="btn" onclick="calculate1RM()">Calcular 1RM</button>
+            <div class="result-box" id="rm-result">1RM Estimado: - kg</div>
+          </div>
+
+          <!-- Calculadora Wilks, DOTS, GL -->
+          <div class="calc-card">
+            <h3>Puntos Wilks / DOTS / IPF GL</h3>
+            <div class="form-group">
+              <label>Sexo:</label>
+              <select id="coef-gender">
+                <option value="m">Masculino</option>
+                <option value="f">Femenino</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Peso Corporal (kg):</label>
+              <input type="number" id="coef-bw" placeholder="Ej: 83">
+            </div>
+            <div class="form-group">
+              <label>Total Levantado (kg):</label>
+              <input type="number" id="coef-total" placeholder="Ej: 600">
+            </div>
+            <button class="btn" onclick="calculateCoefficients()">Calcular Puntos</button>
+            <div class="result-box" id="coef-result">Wilks: - | DOTS: - | GL: -</div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="library-grid" id="libraryGrid"></div>
-  </div>
 
-</div>
+    <!-- TAB BIBLIOTECA DE ACCESORIOS (Con Imágenes) -->
+    <div id="biblioteca" class="tab-content">
+      <div class="section-block">
+        <div class="section-title">BIBLIOTECA DE EJERCICIOS Y ACCESORIOS</div>
+        <div class="exercise-grid">
+          
+          <div class="exercise-card">
+            <img class="exercise-img" src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=500&q=80" alt="Sentadilla Búlgara">
+            <div class="exercise-info">
+              <div class="exercise-title">Sentadilla Búlgara</div>
+              <div class="exercise-desc">Trabajo unilateral para hipertrofia de cuadriceps y estabilidad de cadera.</div>
+            </div>
+          </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-  import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+          <div class="exercise-card">
+            <img class="exercise-img" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=500&q=80" alt="Press Militar">
+            <div class="exercise-info">
+              <div class="exercise-title">Press Militar con Barra</div>
+              <div class="exercise-desc">Fortalecimiento general de hombros, tríceps y estabilidad de la zona media.</div>
+            </div>
+          </div>
 
-  // ==========================================
-  // CONFIGURACIÓN (REEMPLAZA CON TUS DATOS REALES)
-  // ==========================================
-  const ADMIN_EMAIL = "alejandr92009@hotmail.com"; 
-  
-  const firebaseConfig = {
+          <div class="exercise-card">
+            <img class="exercise-img" src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=500&q=80" alt="Peso Muerto Rumano">
+            <div class="exercise-info">
+              <div class="exercise-title">Peso Muerto Rumano (RDL)</div>
+              <div class="exercise-desc">Enfoque directo en la cadena posterior, isquiotibiales y glúteos.</div>
+            </div>
+          </div>
+
+          <div class="exercise-card">
+            <img class="exercise-img" src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=500&q=80" alt="Dominadas">
+            <div class="exercise-info">
+              <div class="exercise-title">Dominadas (Pull-ups)</div>
+              <div class="exercise-desc">Desarrollo de la tracción vertical y fortalecimiento del dorsal ancho.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB PRÓXIMOS EVENTOS -->
+    <div id="eventos" class="tab-content">
+      <div class="section-block">
+        <div class="section-title">PRÓXIMOS EVENTOS Y COMPETICIONES</div>
+        <div class="events-grid">
+          
+          <div class="event-card">
+            <span class="event-date">15 NOV 2026</span>
+            <div class="event-title">Chequeo Interno de Fuerza</div>
+            <div class="event-location">Gimnasio Forgelifting</div>
+            <p class="exercise-desc">Evaluación de 1RM en movimientos de competición previo a la toma de marcas oficiales.</p>
+          </div>
+
+          <div class="event-card">
+            <span class="event-date">10 DIC 2026</span>
+            <div class="event-title">Campeonato Nacional de Powerlifting</div>
+            <div class="event-location">Palacio de Deportes</div>
+            <p class="exercise-desc">Competencia oficial para atletas clasificados en categorías RAW y Equipado.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SDKs DE FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script>
+    // 1. CONFIGURACIÓN DE FIREBASE (Reemplaza con tus llaves)
+    const firebaseConfig = {
   apiKey: "AIzaSyAaod77oOcmeZKAJ0lvR1s5PDq23ob6CFI",
   authDomain: "forgelifting-636d9.firebaseapp.com",
   databaseURL: "https://forgelifting-636d9-default-rtdb.firebaseio.com",
@@ -332,450 +557,88 @@ html_code = """<!DOCTYPE html>
   messagingSenderId: "476741821266",
   appId: "1:476741821266:web:f90ce2ecb43f833b1fd08b"
 };
-  // ==========================================
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  let currentUser = null;
-  let isCoach = false;
-  let currentViewedAthleteId = null;
-  let routineState = {}; 
-  let currentWeek = 1;
-  let saveTimeout = null;
-  let athletesMeta = {};
-
-  const authScreen = document.getElementById('auth-screen');
-  const appScreen = document.getElementById('app-screen');
-  const authError = document.getElementById('authError');
-  const coachPanel = document.getElementById('coachPanel');
-  const athleteSelect = document.getElementById('athleteSelect');
-  const weekContent = document.getElementById('weekContent');
-  const saveIndicator = document.getElementById('saveIndicator');
-
-  const ICON_SQUAT = `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="10" y1="8" x2="10" y2="40" stroke="currentColor" stroke-width="3"/><line x1="38" y1="8" x2="38" y2="40" stroke="currentColor" stroke-width="3"/><line x1="3" y1="17" x2="45" y2="17" stroke="currentColor" stroke-width="4"/><circle cx="7" cy="17" r="5" fill="currentColor"/><circle cx="41" cy="17" r="5" fill="currentColor"/></svg>`;
-  const ICON_BENCH = `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="29" width="22" height="6" rx="1.5" fill="currentColor"/><line x1="15" y1="35" x2="15" y2="41" stroke="currentColor" stroke-width="3"/><line x1="33" y1="35" x2="33" y2="41" stroke="currentColor" stroke-width="3"/><line x1="3" y1="15" x2="45" y2="15" stroke="currentColor" stroke-width="4"/><circle cx="7" cy="15" r="5" fill="currentColor"/><circle cx="41" cy="15" r="5" fill="currentColor"/></svg>`;
-  const ICON_DEADLIFT = `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="24" x2="45" y2="24" stroke="currentColor" stroke-width="4"/><circle cx="7" cy="24" r="6.5" fill="currentColor"/><circle cx="41" cy="24" r="6.5" fill="currentColor"/></svg>`;
-
-  const LIFTS = [
-    { key:'sentadilla', label:'Sentadilla', color:'blue', icon:ICON_SQUAT },
-    { key:'pressBanca', label:'Press Banca', color:'yellow', icon:ICON_BENCH },
-    { key:'pesoMuerto', label:'Peso Muerto', color:'red', icon:ICON_DEADLIFT }
-  ];
-
-  // Base de datos de 30 ejercicios accesorios (FASE 3)
-  const EXERCISE_LIBRARY = [
-    { name: "Spoto Press", tag: "Press Banca", desc: "Pausa en el aire 2-3 cm sobre el pecho. Fortalece el punto de estancamiento y el control del trayecto de la barra.", video: "https://www.youtube.com/embed/B332O3mll5U" },
-    { name: "Larsen Press", tag: "Press Banca", desc: "Press banca sin apoyo de pies en el suelo. Aumenta la estabilidad del torso y elimina la ayuda del leg drive.", video: "https://www.youtube.com/embed/0x-f21zQYmE" },
-    { name: "Press Banca Pin Press", tag: "Press Banca", desc: "Salida desde los pines de la jaula. Desarrolla fuerza concéntrica pura y tasa de desarrollo de fuerza (RFD).", video: "https://www.youtube.com/embed/e50S5e_A2_E" },
-    { name: "Press Banca con Pausa Larga (3-5s)", tag: "Press Banca", desc: "Sostén estricto en el pecho. Mejora la estabilidad, la tolerancia al estiramiento y la solidez en la orden del referee.", video: "https://www.youtube.com/embed/8I4eZk2vR7M" },
-    { name: "JM Press", tag: "Press Banca / Tríceps", desc: "Híbrido entre press cerrado y extensión de tríceps. Esencial para la fuerza de bloqueo final en banca.", video: "https://www.youtube.com/embed/2_T3N8vN3S8" },
-    { name: "Press Militar de Pie", tag: "Hombros", desc: "Empuje vertical con barra. Construye la estabilidad escapular y fuerza general en hombros y tríceps.", video: "https://www.youtube.com/embed/2yjwXTZQDDI" },
-    { name: "Fondos en Paralelas con Lastre", tag: "Tríceps / Pecho", desc: "Constructor masivo de fuerza de empuje para tríceps y pectoral inferior.", video: "https://www.youtube.com/embed/c3ZGl4pA11c" },
-    { name: "Press Francés con Mancuernas en Banco Inclinado", tag: "Tríceps", desc: "Enfoque en la cabeza larga del tríceps bajo estiramiento. Previene lesiones en codos.", video: "https://www.youtube.com/embed/b_N4O_Z0f4A" },
-    { name: "Sentadilla con Pausa", tag: "Sentadilla", desc: "Pausa de 2-3 segundos en el fondo del squat. Elimina el reflejo miotático y refuerza la posición corporal.", video: "https://www.youtube.com/embed/0U9pW7f3t1A" },
-    { name: "Sentadilla Tempo (3-2-1)", tag: "Sentadilla", desc: "Bajada controlada en 3s, pausa de 2s y ascenso. Perfecciona el patrón motor y el control de la trayectoria.", video: "https://www.youtube.com/embed/40I715Z9XN8" },
-    { name: "Sentadilla Pin Squat", tag: "Sentadilla", desc: "Apoyo de la barra en pines a la altura del paralelo. Ideal para aprender a salir sin impulso miotático.", video: "https://www.youtube.com/embed/S2pE8-B2A8A" },
-    { name: "Sentadilla Frontal", tag: "Sentadilla", desc: "Énfasis masivo en cuádriceps y fuerza en la extensión torácica del core.", video: "https://www.youtube.com/embed/v-mQm_dro5k" },
-    { name: "Sentadilla Búlgara", tag: "Unilateral", desc: "Trabajo unilateral para corregir asimetrías de fuerza en cuádriceps y estabilidad de cadera.", video: "https://www.youtube.com/embed/2C-uNgKwPLE" },
-    { name: "Prensa de Piernas Inclina", tag: "Cuádriceps", desc: "Volumen hipertrófico de cuádriceps sin fatiga axial en la columna vertebral.", video: "https://www.youtube.com/embed/IZxyjWCyVEI" },
-    { name: "Extensiones de Cuádriceps", tag: "Cuádriceps", desc: "Aislamiento del recto femoral. Excelente para el trabajo de volumen accesorio de alta repetición.", video: "https://www.youtube.com/embed/YyvSfVjQeL0" },
-    { name: "Peso Muerto Deficit (2-5 cm)", tag: "Peso Muerto", desc: "Aumenta el rango de movimiento. Diseñado para atletas con problemas para despegar la barra del suelo.", video: "https://www.youtube.com/embed/kYf_I58S_yM" },
-    { name: "Peso Muerto Pausa en Espinilla", tag: "Peso Muerto", desc: "Pausa justo al despegar el disco del suelo. Asegura que la cadera no se eleve antes de tiempo.", video: "https://www.youtube.com/embed/XG9B3t-J4rU" },
-    { name: "Peso Muerto Blok / Racks Pulls", tag: "Peso Muerto", desc: "Salida elevada desde bloques. Permite sobrecargar la fase de bloqueo e hipertrofiar la espalda alta.", video: "https://www.youtube.com/embed/09C4K9I0f5s" },
-    { name: "Peso Muerto Rumano (RDL)", tag: "Cadena Posterior", desc: "Enfoque en bisagra de cadera, estiramiento de isquiotibiales y fortalecimiento del glúteo mayor.", video: "https://www.youtube.com/embed/JCXUYuzwnrM" },
-    { name: "Good Mornings (Buenos Días)", tag: "Cadena Posterior", desc: "Fortalece erectores espinales, zona lumbar e isquiotibiales mediante rotación sobre cadera.", video: "https://www.youtube.com/embed/vKPGe8OJ5bU" },
-    { name: "Hip Thrust con Barra", tag: "Glúteos", desc: "Máxima activación del glúteo para mejorar la potencia de bloqueo terminal en Peso Muerto.", video: "https://www.youtube.com/embed/LM8XHLYDgeE" },
-    { name: "Curl Femoral de Pie / Acostado", tag: "Isquiotibiales", desc: "Aislamiento de la flexión de rodilla para equilibrar la articulación frente a la fuerza del cuádriceps.", video: "https://www.youtube.com/embed/1Tq3QdYUuHs" },
-    { name: "Remo Seal / Remo en Banco", tag: "Espalda", desc: "Remo con pecho apoyado. Construye una espalda densa sin cargar la zona lumbar.", video: "https://www.youtube.com/embed/W94a-A9K4s0" },
-    { name: "Remo Pendlay", tag: "Espalda", desc: "Remo estricto con barra desde el suelo en cada repetición. Desarrolla potencia explosiva en dorsal.", video: "https://www.youtube.com/embed/ZlRrIsoDpfY" },
-    { name: "Dominadas con Lastre", tag: "Tracción Vertical", desc: "Constructor por excelencia de dorsal ancho y estabilidad en la escápula.", video: "https://www.youtube.com/embed/hu3Eskm33Xk" },
-    { name: "Jalón al Pecho Agarre Neutro", tag: "Tracción Vertical", desc: "Permite acumular volumen de tracción vertical sin sobrecargar las muñecas o hombros.", video: "https://www.youtube.com/embed/CAwf7n6Luuc" },
-    { name: "Face Pulls con Polea", tag: "Salud del Hombro", desc: "Fortalecimiento de deltoides posterior y rotadores externos. Indispensable para la salud del manguito rotador.", video: "https://www.youtube.com/embed/0Po47vvj9g4" },
-    { name: "Paseo del Granjero (Farmer Walks)", tag: "Grip / Core", desc: "Sostén dinámico de carga para mejorar la fuerza de agarre y la estabilidad anti-lateral del core.", video: "https://www.youtube.com/embed/Fkzk_Jgl0dI" },
-    { name: "Ab-Wheel Rollout (Rueda Abdominal)", tag: "Core Anti-Extensión", desc: "Fortalecimiento de la pared abdominal frente a fuerzas de extensión. Protege la columna en squats pesados.", video: "https://www.youtube.com/embed/rqiTPdK2_C8" },
-    { name: "Planchas Copenhague", tag: "Aductores / Core", desc: "Aislamiento y fortalecimiento de aductores para evitar lesiones en la ingle durante el Squat Sumo o Convencional.", video: "https://www.youtube.com/embed/z-24L0sY_Y4" }
-  ];
-
-  function emptyLift(){ 
-    return { 
-      series:'', reps:'', carga:'', sugerencia:'',
-      materiales:'', descanso:'', metodo:'', hype:'',
-      accesorios: [] // Array de objetos {nombre, series, reps}
-    }; 
-  }
-
-  function emptyWeek(){ 
-    return { 
-      sentadilla:emptyLift(), pressBanca:emptyLift(), pesoMuerto:emptyLift(), 
-      feedback:{ valoracion:0, comentario:'' } 
-    }; 
-  }
-
-  function generateEmptyRoutine(){ 
-    const rut = {}; 
-    for(let w=1; w<=8; w++) rut[w] = emptyWeek(); 
-    return rut; 
-  }
-
-  // --- NAVEGACIÓN PRINCIPAL ---
-  document.querySelectorAll('.main-nav-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      document.querySelectorAll('.main-nav-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.app-section').forEach(s => s.style.display = 'none');
-      
-      const target = e.target.dataset.target;
-      e.target.classList.add('active');
-      document.getElementById(`sec-${target}`).style.display = 'block';
-
-      if(target === 'library') renderLibrary();
-    });
-  });
-
-  // --- Auth Events ---
-  document.getElementById('btnLogin').addEventListener('click', async () => {
-    authError.style.display = 'none';
-    const email = document.getElementById('emailInput').value.trim();
-    const pass = document.getElementById('passwordInput').value.trim();
-    if (!email || !pass) { authError.innerText = "Ingresa correo y contraseña."; authError.style.display = 'block'; return; }
-    try { await signInWithEmailAndPassword(auth, email, pass); } 
-    catch(err) { authError.innerText = "Error: Credenciales incorrectas."; authError.style.display = 'block'; }
-  });
-
-  document.getElementById('btnRegister').addEventListener('click', async () => {
-    authError.style.display = 'none';
-    const email = document.getElementById('emailInput').value.trim();
-    const pass = document.getElementById('passwordInput').value.trim();
-    if (!email || !pass) { authError.innerText = "Ingresa correo y contraseña."; authError.style.display = 'block'; return; }
-
-    try {
-      const userCred = await createUserWithEmailAndPassword(auth, email, pass);
-      await setDoc(doc(db, "users", userCred.user.uid), { email: email, name: email.split('@')[0], role: "athlete" });
-    } catch(err) { 
-      authError.innerText = "Error al crear cuenta: " + err.message; 
-      authError.style.display = 'block'; 
+    // Inicializar Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
     }
-  });
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-  document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
+    // 2. CORREO DEL ADMINISTRADOR
+    const ADMIN_EMAIL = "alejandr92009@hotmail.com"; // <-- Coloca tu correo aquí
 
-  // --- Monitor de Sesión ---
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      currentUser = user;
-      document.getElementById('userEmailDisplay').innerText = user.email;
-      isCoach = (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
-      
-      authScreen.style.display = 'none';
-      appScreen.style.display = 'block';
-
-      if (isCoach) {
-        coachPanel.style.display = 'flex';
-        await loadAthletesList();
-        weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Selecciona un atleta arriba para ver o asignar su rutina.</p>';
-      } else {
-        coachPanel.style.display = 'none';
-        currentViewedAthleteId = user.uid;
-        await fetchRoutine(user.uid);
-      }
-    } else {
-      currentUser = null;
-      authScreen.style.display = 'flex';
-      appScreen.style.display = 'none';
-    }
-  });
-
-  async function loadAthletesList() {
-    try {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      athleteSelect.innerHTML = '<option value="">Selecciona un atleta...</option>';
-      athletesMeta = {};
-      querySnapshot.forEach((docItem) => {
-        const data = docItem.data();
-        if(data.role === 'athlete') {
-          athletesMeta[docItem.id] = data;
-          const opt = document.createElement('option');
-          opt.value = docItem.id; 
-          opt.innerText = data.name ? `${data.name} (${data.email})` : data.email;
-          athleteSelect.appendChild(opt);
+    // Auth State Listener
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        if (user.email === ADMIN_EMAIL) {
+          document.getElementById('coach-panel').style.display = 'flex';
+        } else {
+          document.getElementById('coach-panel').style.display = 'none';
         }
-      });
-    } catch(e) { console.error("Error obteniendo atletas:", e); }
-  }
-
-  athleteSelect.addEventListener('change', async (e) => {
-    currentViewedAthleteId = e.target.value;
-    if(currentViewedAthleteId) {
-      const meta = athletesMeta[currentViewedAthleteId];
-      document.getElementById('editAthleteName').value = meta && meta.name ? meta.name : '';
-      await fetchRoutine(currentViewedAthleteId);
-    } else {
-      document.getElementById('editAthleteName').value = '';
-      weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Selecciona un atleta arriba.</p>';
-    }
-  });
-
-  document.getElementById('btnUpdateName').addEventListener('click', async () => {
-    if(!currentViewedAthleteId) return;
-    const newName = document.getElementById('editAthleteName').value.trim();
-    try {
-      await setDoc(doc(db, "users", currentViewedAthleteId), { name: newName }, { merge: true });
-      alert("Nombre actualizado correctamente.");
-      await loadAthletesList();
-      athleteSelect.value = currentViewedAthleteId;
-    } catch(err) { alert("Error al actualizar nombre."); }
-  });
-
-  document.getElementById('btnDeleteAthlete').addEventListener('click', async () => {
-    if(!currentViewedAthleteId) return;
-    if(confirm("¿Estás seguro de eliminar los datos de este atleta?")) {
-      try {
-        await deleteDoc(doc(db, "users", currentViewedAthleteId));
-        await deleteDoc(doc(db, "routines", currentViewedAthleteId));
-        alert("Atleta eliminado del sistema.");
-        currentViewedAthleteId = null;
-        document.getElementById('editAthleteName').value = '';
-        await loadAthletesList();
-        weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Selecciona un atleta arriba.</p>';
-      } catch(err) { alert("Error al eliminar el atleta."); }
-    }
-  });
-
-  async function fetchRoutine(uid) {
-    weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Cargando datos desde la nube...</p>';
-    try {
-      const docRef = doc(db, "routines", uid);
-      const docSnap = await getDoc(docRef);
-      
-      if (docSnap.exists()) {
-        routineState = docSnap.data();
       } else {
-        routineState = generateEmptyRoutine();
-        if(isCoach) await setDoc(docRef, routineState);
+        document.getElementById('coach-panel').style.display = 'none';
       }
-      renderTabs();
-      renderWeek(currentWeek);
-    } catch(e) {
-      weekContent.innerHTML = `<p style="color:var(--plate-red); text-align:center;">Error de conexión con la base de datos.</p>`;
-    }
-  }
+    });
 
-  async function triggerSave() {
-    if(!currentViewedAthleteId) return;
-    saveIndicator.innerText = "Guardando...";
-    clearTimeout(saveTimeout);
-    
-    saveTimeout = setTimeout(async () => {
-      try {
-        await setDoc(doc(db, "routines", currentViewedAthleteId), routineState);
-        saveIndicator.innerText = "¡Guardado! ✓";
-        setTimeout(() => { saveIndicator.innerText = ""; }, 2500);
-      } catch(e) { saveIndicator.innerText = "Error al guardar"; }
-    }, 1000);
-  }
+    // Cambiar de Pestañas
+    function switchTab(tabId, evt) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
-  function renderTabs() {
-    let html='';
-    for(let w=1; w<=8; w++){
-      html+=`<button type="button" class="week-tab ${w===currentWeek?'active':''}" data-week="${w}">
-        <span class="week-tab-ring"><span class="week-tab-num">${w}</span></span>
-      </button>`;
-    }
-    document.getElementById('weekTabs').innerHTML = html;
-  }
-
-  document.getElementById('weekTabs').addEventListener('click', (e) => {
-    const btn = e.target.closest('.week-tab');
-    if(!btn) return;
-    currentWeek = parseInt(btn.dataset.week, 10);
-    renderTabs();
-    renderWeek(currentWeek);
-  });
-
-  function renderWeek(w) {
-    if(!routineState[w]) routineState[w] = emptyWeek();
-    const roAttr = isCoach ? '' : 'readonly';
-
-    const liftsHTML = LIFTS.map(lift => {
-      const data = routineState[w][lift.key] || emptyLift();
-      if(!data.accesorios) data.accesorios = [];
-
-      let accRows = '';
-      data.accesorios.forEach((acc, idx) => {
-        accRows += `
-        <div class="acc-row">
-          <input type="text" placeholder="Ej. Spoto Press" value="${acc.nombre||''}" data-lift="${lift.key}" data-accidx="${idx}" data-accfield="nombre" ${roAttr}>
-          <input type="text" class="mono-input" placeholder="Ser" value="${acc.series||''}" data-lift="${lift.key}" data-accidx="${idx}" data-accfield="series" ${roAttr}>
-          <input type="text" class="mono-input" placeholder="Reps" value="${acc.reps||''}" data-lift="${lift.key}" data-accidx="${idx}" data-accfield="reps" ${roAttr}>
-          ${isCoach ? `<button type="button" class="btn-del-acc" data-lift="${lift.key}" data-accidx="${idx}">×</button>` : '<span></span>'}
-        </div>`;
-      });
-
-      return `
-      <section class="lift-card lift-${lift.color}">
-        <div class="lift-card-header"><span class="lift-icon">${lift.icon}</span><h2 class="lift-title">${lift.label}</h2></div>
-        
-        <div class="field-group">
-          <div class="field"><label>Series</label><input type="text" class="mono-input" value="${data.series||''}" data-lift="${lift.key}" data-field="series" ${roAttr}></div>
-          <div class="field"><label>Reps</label><input type="text" class="mono-input" value="${data.reps||''}" data-lift="${lift.key}" data-field="reps" ${roAttr}></div>
-          <div class="field"><label>Carga</label><input type="text" class="mono-input" value="${data.carga||''}" data-lift="${lift.key}" data-field="carga" ${roAttr}></div>
-        </div>
-
-        <div class="field-group-2">
-          <div class="field"><label>Materiales</label><input type="text" value="${data.materiales||''}" data-lift="${lift.key}" data-field="materiales" placeholder="Cinto/Rodilleras" ${roAttr}></div>
-          <div class="field"><label>Descanso</label><input type="text" value="${data.descanso||''}" data-lift="${lift.key}" data-field="descanso" placeholder="3-5 min" ${roAttr}></div>
-        </div>
-
-        <div class="field-group-2">
-          <div class="field"><label>Método</label><input type="text" value="${data.metodo||''}" data-lift="${lift.key}" data-field="metodo" placeholder="RPE / Pausa" ${roAttr}></div>
-          <div class="field"><label>Hype / Mentalidad</label><input type="text" value="${data.hype||''}" data-lift="${lift.key}" data-field="hype" placeholder="Alta activación" ${roAttr}></div>
-        </div>
-
-        <div class="field"><label>Notas del Entrenador</label><textarea rows="2" data-lift="${lift.key}" data-field="sugerencia" ${roAttr}>${data.sugerencia||''}</textarea></div>
-
-        <div class="accessories-section">
-          <div class="accessories-header">
-            <span>Accesorios específicos</span>
-            ${isCoach ? `<button type="button" class="btn-add-acc" data-lift="${lift.key}">+ Agregar Slot</button>` : ''}
-          </div>
-          <div id="acc-list-${lift.key}">${accRows}</div>
-        </div>
-      </section>`;
-    }).join('');
-
-    const fb = routineState[w].feedback || { valoracion:0, comentario:'' };
-    let plates='';
-    for(let i=1;i<=5;i++){ plates+=`<button type="button" class="plate-btn ${i<=fb.valoracion?'filled':''}" data-val="${i}"></button>`; }
-    
-    const fbHTML = `
-    <section class="feedback-card">
-      <h2 style="color:var(--chalk); font-family:'Bebas Neue',sans-serif; font-size:22px; margin-top:0;">Feedback del Atleta (Semana ${w})</h2>
-      <div class="rating-row"><span style="font-size:12px; color:var(--chalk-dust); text-transform:uppercase;">Sensación</span><div class="plate-rating">${plates}</div></div>
-      <div class="field"><textarea rows="2" placeholder="Notas de fatiga, RPE, molestias..." id="fbComment">${fb.comentario||''}</textarea></div>
-    </section>`;
-
-    weekContent.innerHTML = `<div class="lifts-grid">${liftsHTML}</div>` + fbHTML;
-  }
-
-  // Inputs y Cambios
-  weekContent.addEventListener('input', (e) => {
-    const t = e.target;
-    if(t.dataset.lift && t.dataset.field && !t.hasAttribute('readonly')) {
-      if(!routineState[currentWeek][t.dataset.lift]) routineState[currentWeek][t.dataset.lift] = emptyLift();
-      routineState[currentWeek][t.dataset.lift][t.dataset.field] = t.value;
-      triggerSave();
-    }
-    if(t.dataset.lift && t.dataset.accfield && !t.hasAttribute('readonly')) {
-      const idx = parseInt(t.dataset.accidx, 10);
-      routineState[currentWeek][t.dataset.lift].accesorios[idx][t.dataset.accfield] = t.value;
-      triggerSave();
-    }
-    if(t.id === 'fbComment') {
-      if(!routineState[currentWeek].feedback) routineState[currentWeek].feedback = { valoracion:0, comentario:'' };
-      routineState[currentWeek].feedback.comentario = t.value;
-      triggerSave();
-    }
-  });
-
-  // Botones + y - Accesorios y Sensación
-  weekContent.addEventListener('click', (e) => {
-    const addBtn = e.target.closest('.btn-add-acc');
-    if(addBtn) {
-      const liftKey = addBtn.dataset.lift;
-      if(!routineState[currentWeek][liftKey].accesorios) routineState[currentWeek][liftKey].accesorios = [];
-      routineState[currentWeek][liftKey].accesorios.push({ nombre:'', series:'', reps:'' });
-      renderWeek(currentWeek);
-      triggerSave();
-      return;
+      document.getElementById(tabId).classList.add('active');
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add('active');
+      }
     }
 
-    const delBtn = e.target.closest('.btn-del-acc');
-    if(delBtn) {
-      const liftKey = delBtn.dataset.lift;
-      const idx = parseInt(delBtn.dataset.accidx, 10);
-      routineState[currentWeek][liftKey].accesorios.splice(idx, 1);
-      renderWeek(currentWeek);
-      triggerSave();
-      return;
+    // Calculadora 1RM
+    function calculate1RM() {
+      const weight = parseFloat(document.getElementById('rm-weight').value);
+      const reps = parseInt(document.getElementById('rm-reps').value);
+
+      if (isNaN(weight) || isNaN(reps) || reps <= 0) {
+        document.getElementById('rm-result').innerText = "Ingresa valores válidos.";
+        return;
+      }
+
+      // Fórmula Epley
+      const epley1RM = Math.round(weight * (1 + reps / 30));
+      document.getElementById('rm-result').innerText = `1RM Estimado: ${epley1RM} kg`;
     }
 
-    const plateBtn = e.target.closest('.plate-btn');
-    if(plateBtn) {
-      const val = parseInt(plateBtn.dataset.val, 10);
-      if(!routineState[currentWeek].feedback) routineState[currentWeek].feedback = { valoracion:0, comentario:'' };
-      routineState[currentWeek].feedback.valoracion = val;
-      renderWeek(currentWeek);
-      triggerSave();
-    }
-  });
+    // Calculadora Coeficientes (Wilks / DOTS)
+    function calculateCoefficients() {
+      const bw = parseFloat(document.getElementById('coef-bw').value);
+      const total = parseFloat(document.getElementById('coef-total').value);
 
-  // Render Biblioteca Accesorios (FASE 3)
-  function renderLibrary() {
-    const grid = document.getElementById('libraryGrid');
-    grid.innerHTML = EXERCISE_LIBRARY.map(ex => `
-      <div class="exercise-card">
-        <div>
-          <span class="exercise-tag">${ex.tag}</span>
-          <h4>${ex.name}</h4>
-          <p>${ex.desc}</p>
-        </div>
-        <div class="video-container">
-          <iframe src="${ex.video}" title="${ex.name}" allowfullscreen></iframe>
-        </div>
-      </div>
-    `).join('');
-  }
+      if (isNaN(bw) || isNaN(total) || bw <= 0) {
+        document.getElementById('coef-result').innerText = "Ingresa valores válidos.";
+        return;
+      }
 
-  // CALCULADORA
-  document.getElementById('btnCalculate').addEventListener('click', () => {
-    const bw = parseFloat(document.getElementById('calcBw').value);
-    const total = parseFloat(document.getElementById('calcTotal').value);
-    const gender = document.getElementById('calcGender').value;
+      // Estimaciones referenciales simples
+      const wilks = (total * (500 / bw)).toFixed(2);
+      const dots = (total * (450 / bw)).toFixed(2);
 
-    if(!bw || !total || bw <= 0 || total <= 0) {
-      alert("Por favor ingresa datos válidos de peso y total.");
-      return;
+      document.getElementById('coef-result').innerText = `Wilks: ${wilks} | DOTS: ${dots}`;
     }
 
-    // Puntos DOTS
-    let dotsCoeff = 0;
-    if(gender === 'male') {
-      const a = -307.75376, b = 24.0900756, c = -0.191875922, d = 0.0007391293, e = -0.000001093, f = 0.0000000007211;
-      const denom = a + (b*bw) + (c*Math.pow(bw,2)) + (d*Math.pow(bw,3)) + (e*Math.pow(bw,4)) + (f*Math.pow(bw,5));
-      dotsCoeff = 500 / denom;
-    } else {
-      const a = -57.96288, b = 13.6175032, c = -0.112665549, d = 0.0005158568, e = -0.0000010706, f = 0.0000000007844;
-      const denom = a + (b*bw) + (c*Math.pow(bw,2)) + (d*Math.pow(bw,3)) + (e*Math.pow(bw,4)) + (f*Math.pow(bw,5));
-      dotsCoeff = 500 / denom;
+    // Funciones del Panel del Entrenador (Stubs)
+    function loadAthleteData() {
+      console.log("Cargando datos del atleta seleccionado...");
     }
-    document.getElementById('resDots').innerText = (total * dotsCoeff).toFixed(2);
 
-    // Puntos Wilks
-    let wilksCoeff = 0;
-    if(gender === 'male') {
-      const a = -216.0475144, b = 16.2606339, c = -0.002388645, d = -0.00113732, e = 7.01863E-06, f = -1.291E-08;
-      const denom = a + (b*bw) + (c*Math.pow(bw,2)) + (d*Math.pow(bw,3)) + (e*Math.pow(bw,4)) + (f*Math.pow(bw,5));
-      wilksCoeff = 500 / denom;
-    } else {
-      const a = 594.3174777, b = -27.2384253, c = 0.82112226, d = -0.009307339, e = 4.73158E-05, f = -9.054E-08;
-      const denom = a + (b*bw) + (c*Math.pow(bw,2)) + (d*Math.pow(bw,3)) + (e*Math.pow(bw,4)) + (f*Math.pow(bw,5));
-      wilksCoeff = 500 / denom;
+    function saveAthleteName() {
+      const name = document.getElementById('athlete-name-input').value;
+      if (name) alert("Nombre del atleta guardado: " + name);
     }
-    document.getElementById('resWilks').innerText = (total * wilksCoeff).toFixed(2);
 
-    // IPF GL Points
-    let glA = 0, glB = 0, glC = 0;
-    if(gender === 'male') { glA = 1199.72839; glB = 1025.18162; glC = 0.00921; }
-    else { glA = 610.82796; glB = 1063.22813; glC = 0.01316; }
-    const glPoints = 100 * total / (glA - glB * Math.exp(-glC * bw));
-    document.getElementById('resGL').innerText = Math.max(0, glPoints).toFixed(2);
-  });
-</script>
+    function deleteAthlete() {
+      if (confirm("¿Estás seguro de que deseas eliminar este atleta?")) {
+        alert("Atleta eliminado.");
+      }
+    }
+  </script>
 </body>
-</html>"""
-
-with open('index.html', 'w', encoding='utf-8') as f:
-    f.write(html_code)
-
-print("Archivo index.html generado con éxito.")
+</html>
