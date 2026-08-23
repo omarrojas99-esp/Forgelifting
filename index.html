@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -7,7 +7,6 @@
 <meta name="theme-color" content="#15161b">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="logo.png">
-
 <title>Forgelifting</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,7 +17,6 @@
   }
   *{box-sizing:border-box;}
   body{ margin:0; background:var(--ink); color:var(--chalk); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; min-height:100vh; }
-  
   /* Auth Screen */
   #auth-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; text-align: center; }
   .auth-box { background: var(--panel); border: 1px solid var(--steel); border-radius: 10px; padding: 30px; width: 100%; max-width: 400px; }
@@ -28,35 +26,33 @@
   .btn-auth { width: 100%; background: var(--gold); color: var(--ink); border: none; padding: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; margin-bottom: 10px; font-size: 15px; }
   .btn-auth-sec { width: 100%; background: transparent; color: var(--chalk-dust); border: 1px solid var(--steel); padding: 12px; font-weight: 600; border-radius: 6px; cursor: pointer; font-size: 15px; }
   .auth-error { color: var(--plate-red); font-size: 13px; margin-bottom: 15px; display: none; word-break: break-word; }
-
   /* App Layout */
   #app-screen { display: none; max-width:1180px; margin:0 auto; padding:28px 20px 50px; }
-  
+  /* Encabezado con Video en Bucle */
+  .header-video-wrap{ position:relative; width:100%; aspect-ratio:16/9; max-height:420px; border-radius:14px; overflow:hidden; background:#000; margin-bottom:22px; box-shadow:0 8px 24px rgba(0,0,0,0.35); }
+  .header-video{ position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block; }
+  .header-video-mute{ position:absolute; left:14px; bottom:14px; display:flex; align-items:center; gap:7px; background:rgba(21,22,27,0.55); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); border:1px solid rgba(236,232,224,0.35); color:var(--chalk); padding:7px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+  .header-video-mute svg{ width:16px; height:16px; flex-shrink:0; }
   .brand-container { display: flex; align-items: center; gap: 14px; }
   .brand-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
   .brand-eyebrow { display: block; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 2px; }
   .brand h1 { font-family: 'Bebas Neue', sans-serif; font-size: 38px; letter-spacing: .03em; margin: 0; line-height: 1; text-transform: uppercase; }
-  
   .header-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
   .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;}
-  
   .main-nav { display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--steel); padding-bottom: 10px; flex-wrap: wrap; }
   .main-nav-btn { background: transparent; border: none; color: var(--chalk-dust); font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: .05em; padding: 4px 12px; cursor: pointer; transition: all 0.2s; border-radius: 4px; }
   .main-nav-btn:hover { color: var(--chalk); }
   .main-nav-btn.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
-
   input,textarea,select{ background:var(--ink);border:1px solid var(--steel);color:var(--chalk); border-radius:6px;padding:8px 10px;font-family:'Inter',sans-serif;font-size:13.5px;width:100%; }
   input[readonly], textarea[readonly] { opacity: 0.75; cursor: not-allowed; border-color: transparent; }
   textarea{resize:vertical;}
   .mono-input{font-family:'JetBrains Mono',monospace;}
   .btn-logout { background: transparent; border: 1px solid var(--plate-red); color: var(--plate-red); padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
-
   /* Coach Panel */
   .coach-panel { background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: none; align-items: center; gap: 12px; flex-wrap: wrap; }
   .coach-panel select { max-width: 220px; border-color: var(--gold); }
   .btn-danger { background: transparent; border: 1px solid var(--plate-red); color: var(--plate-red); padding: 7px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
   .btn-secondary-action { background: var(--steel); border: none; color: var(--chalk); padding: 7px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: 600; }
-
   /* Lifts & Weeks */
   .week-tabs{display:flex;gap:10px;overflow-x:auto;padding:10px 0;margin-bottom:10px;}
   .week-tab{background:transparent;border:none;cursor:pointer;padding:2px;flex:0 0 auto; opacity:0.6;}
@@ -64,20 +60,17 @@
   .week-tab-ring{ width:44px;height:44px;border-radius:50%; background:var(--steel); display:flex;align-items:center;justify-content:center; }
   .week-tab.active .week-tab-ring{ background: var(--gold); }
   .week-tab-num{ width:36px;height:36px;border-radius:50%;background:var(--panel); display:flex;align-items:center;justify-content:center; font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--chalk); }
-  
   .lifts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-bottom:18px;}
   .lift-card{ --lift-color:var(--steel); background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--lift-color); border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px; }
   .lift-card.lift-blue{--lift-color:var(--plate-blue);}
   .lift-card.lift-yellow{--lift-color:var(--plate-yellow);}
   .lift-card.lift-red{--lift-color:var(--plate-red);}
-  .lift-card-header{display:flex;align-items:center;gap:10px;}
+  .lift-card-header{display:flex;align-items:center;gap:10px; justify-content:space-between;}
   .lift-icon svg{width:28px;height:28px;color:var(--lift-color);display:block;}
   .lift-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.05em;text-transform:uppercase;color:var(--lift-color);margin:0;}
-
   .field-group{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
   .field-group-2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
   .field label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--chalk-dust);font-weight:600;margin-bottom:4px;}
-
   /* Accesorios por movimiento */
   .accessories-section { border-top: 1px dashed var(--steel); padding-top: 12px; margin-top: 4px; }
   .accessories-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
@@ -85,15 +78,12 @@
   .btn-add-acc { background: rgba(212, 175, 55, 0.15); border: 1px solid var(--gold); color: var(--gold); padding: 3px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: 600; }
   .acc-row { display: grid; grid-template-columns: 1fr 60px 60px 28px; gap: 6px; align-items: center; margin-bottom: 6px; }
   .btn-del-acc { background: transparent; border: 1px solid var(--plate-red); color: var(--plate-red); border-radius: 4px; cursor: pointer; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-
   .feedback-card{background:var(--panel);border:1px solid var(--steel);border-radius:10px;padding:20px;margin-top:15px;}
   .rating-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
   .plate-rating{display:flex;gap:8px;}
   .plate-btn{width:26px;height:26px;border-radius:50%;border:2px solid var(--steel);background:transparent;cursor:pointer;padding:0;}
   .plate-btn.filled{background:var(--gold);border-color:var(--gold);}
-  
   .save-indicator{font-size:12px;color:var(--gold);font-weight:600;}
-
   /* Tablas de Reglamento IPF */
   .rule-card { background: var(--panel); border: 1px solid var(--steel); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
   .rule-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--gold); margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--steel); padding-bottom: 8px; }
@@ -104,14 +94,12 @@
   .badge-red { background: var(--plate-red); }
   .badge-blue { background: var(--plate-blue); }
   .badge-yellow { background: var(--plate-yellow); color: #000; }
-
   /* Calculadoras */
   .calc-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
   .calc-card { background: var(--panel); border: 1px solid var(--steel); border-radius: 10px; padding: 20px; }
   .calc-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 15px; }
   .calc-res-box { background: var(--ink); border: 1px solid var(--steel); border-radius: 6px; padding: 12px; text-align: center; margin-top: 15px; }
   .calc-res-val { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: bold; color: var(--gold); }
-
   /* Biblioteca de Accesorios & Vlogs */
   .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
   .exercise-card { background: var(--panel); border: 1px solid var(--steel); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -124,7 +112,6 @@
 </style>
 </head>
 <body>
-
 <!-- PANTALLA AUTH -->
 <div id="auth-screen">
   <div class="auth-box">
@@ -137,10 +124,17 @@
     <button id="btnRegister" class="btn-auth-sec">Registrarme como Atleta</button>
   </div>
 </div>
-
 <!-- APP PRINCIPAL -->
 <div id="app-screen">
-  
+  <!-- ENCABEZADO CON VIDEO EN BUCLE -->
+  <div class="header-video-wrap">
+    <video id="headerVideo" class="header-video" src="header-video.mp4" autoplay loop muted playsinline></video>
+    <button type="button" id="btnMuteToggle" class="header-video-mute" aria-label="Activar o silenciar sonido del video">
+      <svg id="iconMuted" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 5 6 9H2v6h4l5 4V5Z" fill="currentColor"/><line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg id="iconUnmuted" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none;"><path d="M11 5 6 9H2v6h4l5 4V5Z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18.5 6a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span id="muteToggleText">Toca para sonido</span>
+    </button>
+  </div>
   <header class="header-top">
     <div class="brand-container">
       <img src="logo.png" alt="Forgelifting Logo" class="brand-logo" onerror="this.style.display='none'">
@@ -154,7 +148,6 @@
       <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
     </div>
   </header>
-
   <!-- PANEL ENTRENADOR -->
   <div id="coachPanel" class="coach-panel">
     <strong style="color: var(--gold); font-size: 14px;">PANEL ENTRENADOR</strong>
@@ -166,7 +159,6 @@
     <button id="btnDeleteAthlete" class="btn-danger">Dar de baja</button>
     <span id="saveIndicator" class="save-indicator"></span>
   </div>
-
   <nav class="main-nav">
     <button class="main-nav-btn active" data-target="planification">Planificación</button>
     <button class="main-nav-btn" data-target="history">Historial</button>
@@ -176,13 +168,11 @@
     <button class="main-nav-btn" data-target="library">Biblioteca</button>
     <button class="main-nav-btn" data-target="vlogs">Vlogs</button>
   </nav>
-
   <!-- SECCIÓN PLANIFICACIÓN -->
   <div id="sec-planification" class="app-section">
     <nav class="week-tabs" id="weekTabs"></nav>
     <main id="weekContent" style="margin-top: 10px;"></main>
   </div>
-
   <!-- SECCIÓN HISTORIAL -->
   <div id="sec-history" class="app-section" style="display: none;">
     <div style="margin-bottom: 20px;">
@@ -193,7 +183,6 @@
        <p style="color: var(--chalk); font-size: 14px; margin: 0;">El historial de planificaciones aparecerá aquí una vez que finalices tu primer bloque de entrenamiento.</p>
     </div>
   </div>
-
   <!-- SECCIÓN DESCARGAS -->
   <div id="sec-downloads" class="app-section" style="display: none;">
     <div style="margin-bottom: 20px;">
@@ -204,7 +193,6 @@
        <p style="color: var(--chalk); font-size: 14px; margin: 0;">No hay planificaciones finalizadas disponibles para descargar en este momento.</p>
     </div>
   </div>
-
   <!-- SECCIÓN REGLAMENTO IPF -->
   <div id="sec-rules" class="app-section" style="display: none;">
     <div class="rule-card">
@@ -289,10 +277,115 @@
       </div>
     </div>
   </div>
-
   <!-- SECCIÓN CALCULADORAS -->
   <div id="sec-calculators" class="app-section" style="display: none;">
     <div class="calc-container">
+      
+      <!-- CALCULADORA DE PORCENTAJES (NUEVA) -->
+      <div class="calc-card">
+        <h3>Calculadora de Porcentajes</h3>
+        <div class="field" style="margin-bottom: 15px;">
+          <label>Peso (kg o lb)</label>
+          <input type="number" id="calcPercWeight" placeholder="Ej. 100" step="0.5">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div class="calc-res-box" style="margin-top:0;">
+            <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">90%</div>
+            <div class="calc-res-val" id="res90">0.00</div>
+          </div>
+          <div class="calc-res-box" style="margin-top:0;">
+            <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">80%</div>
+            <div class="calc-res-val" id="res80">0.00</div>
+          </div>
+          <div class="calc-res-box" style="margin-top:0;">
+            <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">70%</div>
+            <div class="calc-res-val" id="res70">0.00</div>
+          </div>
+          <div class="calc-res-box" style="margin-top:0;">
+            <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">60%</div>
+            <div class="calc-res-val" id="res60">0.00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALCULADORA DE SUPERÁVIT / DÉFICIT CALÓRICO (NUEVA) -->
+      <div class="calc-card">
+        <h3>Calculadora de Superávit / Déficit Calórico</h3>
+        <div class="field-group-2" style="margin-bottom: 12px;">
+          <div class="field">
+            <label>Peso Actual (kg)</label>
+            <input type="number" id="calcCalWeight" placeholder="Ej. 80" step="0.1">
+          </div>
+          <div class="field">
+            <label>Altura (cm)</label>
+            <input type="number" id="calcCalHeight" placeholder="Ej. 175" step="0.1">
+          </div>
+        </div>
+        <div class="field-group-2" style="margin-bottom: 12px;">
+          <div class="field">
+            <label>Edad</label>
+            <input type="number" id="calcCalAge" placeholder="Ej. 28" step="1">
+          </div>
+          <div class="field">
+            <label>Género</label>
+            <select id="calcCalGender">
+              <option value="male">Masculino</option>
+              <option value="female">Femenino</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom: 12px;">
+          <label>Nivel de Actividad</label>
+          <select id="calcCalActivity">
+            <option value="1.2">Sedentario (poco o ningún ejercicio)</option>
+            <option value="1.375">Ligero (ejercicio 1-3 días/semana)</option>
+            <option value="1.55">Moderado (ejercicio 3-5 días/semana)</option>
+            <option value="1.725">Intenso (ejercicio 6-7 días/semana)</option>
+            <option value="1.9">Muy intenso (entreno diario + trabajo físico)</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom: 15px;">
+          <label>Objetivo</label>
+          <select id="calcCalGoal">
+            <option value="loss">Perder peso (Déficit)</option>
+            <option value="gain">Ganar peso (Superávit)</option>
+            <option value="maintain">Mantenerse</option>
+          </select>
+        </div>
+        <button type="button" id="btnCalcCalories" class="btn-auth" style="margin-bottom: 0;">Calcular Calorías</button>
+        <div class="calc-res-box">
+          <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Metabolismo Basal (BMR)</div>
+          <div class="calc-res-val" id="resBMR">0</div>
+        </div>
+        <div class="calc-res-box">
+          <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Mantenimiento (TDEE)</div>
+          <div class="calc-res-val" id="resTDEE">0</div>
+        </div>
+        <div class="calc-res-box">
+          <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;" id="resCalGoalLabel">Calorías Objetivo</div>
+          <div class="calc-res-val" id="resCalGoal">0</div>
+        </div>
+        
+        <!-- INICIO MODIFICACIÓN: MACROS -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:15px;">
+          <div class="calc-res-box" style="margin-top:0;">
+            <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Proteínas (g)</div>
+            <div class="calc-res-val" id="resProt">0</div>
+          </div>
+          <div class="calc-res-box" style="margin-top:0;">
+            <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Carbos (g)</div>
+            <div class="calc-res-val" id="resCarbs">0</div>
+          </div>
+          <div class="calc-res-box" style="margin-top:0;">
+            <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Grasas (g)</div>
+            <div class="calc-res-val" id="resFats">0</div>
+          </div>
+        </div>
+        <!-- FIN MODIFICACIÓN: MACROS -->
+        
+      </div>
+
+      <!-- CALCULADORA DE COEFICIENTES -->
       <div class="calc-card">
         <h3>Calculadora de Coeficientes IPF</h3>
         <div class="field" style="margin-bottom: 12px;">
@@ -311,7 +404,6 @@
           <input type="number" id="calcTotal" placeholder="Ej. 650.0" step="0.5">
         </div>
         <button type="button" id="btnCalculate" class="btn-auth" style="margin-bottom: 0;">Calcular Coeficientes</button>
-
         <div class="calc-res-box">
           <div style="font-size: 12px; color: var(--chalk-dust); text-transform: uppercase;">Puntos DOTS</div>
           <div class="calc-res-val" id="resDots">0.00</div>
@@ -327,7 +419,6 @@
       </div>
     </div>
   </div>
-
   <!-- SECCIÓN BIBLIOTECA DE ACCESORIOS (IMÁGENES) -->
   <div id="sec-library" class="app-section" style="display: none;">
     <div style="margin-bottom: 20px;">
@@ -336,7 +427,6 @@
     </div>
     <div class="library-grid" id="libraryGrid"></div>
   </div>
-
   <!-- SECCIÓN VLOGS -->
   <div id="sec-vlogs" class="app-section" style="display: none;">
     <div style="margin-bottom: 20px;">
@@ -353,19 +443,15 @@
        </div>
     </div>
   </div>
-
 </div>
-
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
   import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
   // ==========================================
   // CONFIGURACIÓN (REEMPLAZA CON TUS DATOS REALES)
   // ==========================================
   const ADMIN_EMAIL = "alejandr92009@hotmail.com"; 
-  
   const firebaseConfig = {
   apiKey: "AIzaSyAaod77oOcmeZKAJ0lvR1s5PDq23ob6CFI",
   authDomain: "forgelifting-636d9.firebaseapp.com",
@@ -376,11 +462,9 @@
   appId: "1:476741821266:web:f90ce2ecb43f833b1fd08b"
 };
   // ==========================================
-
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-
   let currentUser = null;
   let isCoach = false;
   let currentViewedAthleteId = null;
@@ -388,7 +472,6 @@
   let currentWeek = 1;
   let saveTimeout = null;
   let athletesMeta = {};
-
   const authScreen = document.getElementById('auth-screen');
   const appScreen = document.getElementById('app-screen');
   const authError = document.getElementById('authError');
@@ -396,11 +479,57 @@
   const athleteSelect = document.getElementById('athleteSelect');
   const weekContent = document.getElementById('weekContent');
   const saveIndicator = document.getElementById('saveIndicator');
+  
+  // INICIO DE MODIFICACIÓN: FUNCIONES PARA NOTIFICACIONES PUSH
+  function requestNotificationPermission() {
+    if ("Notification" in window) {
+      if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+        Notification.requestPermission();
+      }
+    }
+  }
 
+  function checkNotifications(routine) {
+    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    
+    const today = new Date().toISOString().split('T')[0]; // Fecha actual YYYY-MM-DD
+    const notifiedKey = 'forgelifting_notified_' + today;
+    let notifiedLifts = JSON.parse(localStorage.getItem(notifiedKey) || '[]');
+
+    for (let w = 1; w <= 8; w++) {
+      if (!routine[w]) continue;
+      LIFTS.forEach(lift => {
+        const liftData = routine[w][lift.key];
+        if (liftData && liftData.fecha === today) {
+          const liftId = `${w}-${lift.key}`;
+          if (!notifiedLifts.includes(liftId)) {
+            new Notification("Forgelifting - ¡Día de Entrenamiento!", {
+              body: `Hoy te corresponde realizar: ${lift.label} (Semana ${w})`,
+              icon: "logo.png"
+            });
+            notifiedLifts.push(liftId);
+          }
+        }
+      });
+    }
+    localStorage.setItem(notifiedKey, JSON.stringify(notifiedLifts));
+  }
+  // FIN DE MODIFICACIÓN: FUNCIONES PARA NOTIFICACIONES PUSH
+
+  // --- Encabezado con Video en Bucle: Toggle de sonido ---
+  const headerVideo = document.getElementById('headerVideo');
+  const btnMuteToggle = document.getElementById('btnMuteToggle');
+  if(btnMuteToggle && headerVideo){
+    btnMuteToggle.addEventListener('click', () => {
+      headerVideo.muted = !headerVideo.muted;
+      document.getElementById('iconMuted').style.display = headerVideo.muted ? 'block' : 'none';
+      document.getElementById('iconUnmuted').style.display = headerVideo.muted ? 'none' : 'block';
+      document.getElementById('muteToggleText').innerText = headerVideo.muted ? 'Toca para sonido' : 'Silenciar';
+    });
+  }
   const ICON_SQUAT = `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="10" y1="8" x2="10" y2="40" stroke="currentColor" stroke-width="3"/><line x1="38" y1="8" x2="38" y2="40" stroke="currentColor" stroke-width="3"/><line x1="3" y1="17" x2="45" y2="17" stroke="currentColor" stroke-width="4"/><circle cx="7" cy="17" r="5" fill="currentColor"/><circle cx="41" cy="17" r="5" fill="currentColor"/></svg>`;
   const ICON_BENCH = `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="29" width="22" height="6" rx="1.5" fill="currentColor"/><line x1="15" y1="35" x2="15" y2="41" stroke="currentColor" stroke-width="3"/><line x1="33" y1="35" x2="33" y2="41" stroke="currentColor" stroke-width="3"/><line x1="3" y1="15" x2="45" y2="15" stroke="currentColor" stroke-width="4"/><circle cx="7" cy="15" r="5" fill="currentColor"/><circle cx="41" cy="15" r="5" fill="currentColor"/></svg>`;
   const ICON_DEADLIFT = `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="3" y1="24" x2="45" y2="24" stroke="currentColor" stroke-width="4"/><circle cx="7" cy="24" r="6.5" fill="currentColor"/><circle cx="41" cy="24" r="6.5" fill="currentColor"/></svg>`;
-
   const LIFTS = [
     { key:'sentadilla', label:'Sentadilla', color:'blue', icon:ICON_SQUAT },
     { key:'pressBanca', label:'Press Banca', color:'yellow', icon:ICON_BENCH },
@@ -409,7 +538,6 @@
     { key:'pressBanca2', label:'Press Banca Sec.', color:'yellow', icon:ICON_BENCH },
     { key:'pesoMuerto2', label:'Peso Muerto Sec.', color:'red', icon:ICON_DEADLIFT }
   ];
-
   // Base de datos con imágenes extraídas de las miniaturas
   const EXERCISE_LIBRARY = [
     { name: "Spoto Press", tag: "Press Banca", desc: "Pausa en el aire 2-3 cm sobre el pecho. Fortalece el punto de estancamiento y el control del trayecto de la barra.", image: "https://img.youtube.com/vi/B332O3mll5U/0.jpg" },
@@ -443,27 +571,36 @@
     { name: "Ab-Wheel Rollout (Rueda Abdominal)", tag: "Core Anti-Extensión", desc: "Fortalecimiento de la pared abdominal frente a fuerzas de extensión. Protege la columna en squats pesados.", image: "https://img.youtube.com/vi/rqiTPdK2_C8/0.jpg" },
     { name: "Planchas Copenhague", tag: "Aductores / Core", desc: "Aislamiento y fortalecimiento de aductores para evitar lesiones en la ingle durante el Squat Sumo o Convencional.", image: "https://img.youtube.com/vi/z-24L0sY_Y4/0.jpg" }
   ];
-
   function emptyLift(){ 
     return { 
       series:'', reps:'', carga:'', sugerencia:'',
       materiales:'', descanso:'', metodo:'', hype:'',
-      accesorios: [] // Array de objetos {nombre, series, reps}
+      fecha:'', // <--- MEJORA: Fecha individual del movimiento
+      accesorios: [], // Array de objetos {nombre, series, reps}
+      valoracion: 0 // <--- MEJORA: Valoración individual por movimiento
     }; 
   }
-
   function emptyWeek(){ 
     return { 
+      fecha: '', // <--- MEJORA: Calendario por sesión
       sentadilla:emptyLift(), pressBanca:emptyLift(), pesoMuerto:emptyLift(), 
       sentadilla2:emptyLift(), pressBanca2:emptyLift(), pesoMuerto2:emptyLift(),
       feedback:{ valoracion:0, comentario:'' } 
     }; 
   }
-
   function generateEmptyRoutine(){ 
     const rut = {}; 
     for(let w=1; w<=8; w++) rut[w] = emptyWeek(); 
     return rut; 
+  }
+
+  // Utilidad para mostrar el día de la semana
+  function getWeekday(dateString) {
+    if(!dateString) return '';
+    const [y,m,d] = dateString.split('-');
+    const date = new Date(y, m-1, d);
+    const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    return days[date.getDay()];
   }
 
   // --- NAVEGACIÓN PRINCIPAL ---
@@ -471,31 +608,28 @@
     btn.addEventListener('click', (e) => {
       document.querySelectorAll('.main-nav-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.app-section').forEach(s => s.style.display = 'none');
-      
       const target = e.target.dataset.target;
       e.target.classList.add('active');
       document.getElementById(`sec-${target}`).style.display = 'block';
-
       if(target === 'library') renderLibrary();
     });
   });
-
   // --- Auth Events ---
   document.getElementById('btnLogin').addEventListener('click', async () => {
     authError.style.display = 'none';
+    requestNotificationPermission(); // <-- Se pide el permiso por acción del usuario
     const email = document.getElementById('emailInput').value.trim();
     const pass = document.getElementById('passwordInput').value.trim();
     if (!email || !pass) { authError.innerText = "Ingresa correo y contraseña."; authError.style.display = 'block'; return; }
     try { await signInWithEmailAndPassword(auth, email, pass); } 
     catch(err) { authError.innerText = "Error: Credenciales incorrectas."; authError.style.display = 'block'; }
   });
-
   document.getElementById('btnRegister').addEventListener('click', async () => {
     authError.style.display = 'none';
+    requestNotificationPermission(); // <-- Se pide el permiso por acción del usuario
     const email = document.getElementById('emailInput').value.trim();
     const pass = document.getElementById('passwordInput').value.trim();
     if (!email || !pass) { authError.innerText = "Ingresa correo y contraseña."; authError.style.display = 'block'; return; }
-
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, pass);
       await setDoc(doc(db, "users", userCred.user.uid), { email: email, name: email.split('@')[0], role: "athlete" });
@@ -504,19 +638,15 @@
       authError.style.display = 'block'; 
     }
   });
-
   document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
-
   // --- Monitor de Sesión ---
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       currentUser = user;
       document.getElementById('userEmailDisplay').innerText = user.email;
       isCoach = (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
-      
       authScreen.style.display = 'none';
       appScreen.style.display = 'block';
-
       if (isCoach) {
         coachPanel.style.display = 'flex';
         await loadAthletesList();
@@ -532,7 +662,6 @@
       appScreen.style.display = 'none';
     }
   });
-
   async function loadAthletesList() {
     try {
       const querySnapshot = await getDocs(collection(db, "users"));
@@ -550,7 +679,6 @@
       });
     } catch(e) { console.error("Error obteniendo atletas:", e); }
   }
-
   athleteSelect.addEventListener('change', async (e) => {
     currentViewedAthleteId = e.target.value;
     if(currentViewedAthleteId) {
@@ -562,7 +690,6 @@
       weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Selecciona un atleta arriba.</p>';
     }
   });
-
   document.getElementById('btnUpdateName').addEventListener('click', async () => {
     if(!currentViewedAthleteId) return;
     const newName = document.getElementById('editAthleteName').value.trim();
@@ -573,7 +700,6 @@
       athleteSelect.value = currentViewedAthleteId;
     } catch(err) { alert("Error al actualizar nombre."); }
   });
-
   document.getElementById('btnDeleteAthlete').addEventListener('click', async () => {
     if(!currentViewedAthleteId) return;
     if(confirm("¿Estás seguro de eliminar los datos de este atleta?")) {
@@ -588,13 +714,11 @@
       } catch(err) { alert("Error al eliminar el atleta."); }
     }
   });
-
   async function fetchRoutine(uid) {
     weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Cargando datos desde la nube...</p>';
     try {
       const docRef = doc(db, "routines", uid);
       const docSnap = await getDoc(docRef);
-      
       if (docSnap.exists()) {
         routineState = docSnap.data();
       } else {
@@ -603,16 +727,19 @@
       }
       renderTabs();
       renderWeek(currentWeek);
+      
+      // INICIO MODIFICACIÓN: Revisión de Notificaciones una vez cargada la rutina
+      checkNotifications(routineState);
+      // FIN MODIFICACIÓN
+      
     } catch(e) {
       weekContent.innerHTML = `<p style="color:var(--plate-red); text-align:center;">Error de conexión con la base de datos.</p>`;
     }
   }
-
   async function triggerSave() {
     if(!currentViewedAthleteId) return;
     saveIndicator.innerText = "Guardando...";
     clearTimeout(saveTimeout);
-    
     saveTimeout = setTimeout(async () => {
       try {
         await setDoc(doc(db, "routines", currentViewedAthleteId), routineState);
@@ -621,7 +748,6 @@
       } catch(e) { saveIndicator.innerText = "Error al guardar"; }
     }, 1000);
   }
-
   function renderTabs() {
     let html='';
     for(let w=1; w<=8; w++){
@@ -631,7 +757,6 @@
     }
     document.getElementById('weekTabs').innerHTML = html;
   }
-
   document.getElementById('weekTabs').addEventListener('click', (e) => {
     const btn = e.target.closest('.week-tab');
     if(!btn) return;
@@ -639,14 +764,35 @@
     renderTabs();
     renderWeek(currentWeek);
   });
-
   function renderWeek(w) {
     if(!routineState[w]) routineState[w] = emptyWeek();
     const roAttr = isCoach ? '' : 'readonly';
+    
+    // --- MEJORA: Cabecera con Calendario, Guardar y Limpiar ---
+    const dayStr = getWeekday(routineState[w].fecha);
+    const headerControlsHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:15px; flex-wrap:wrap; gap:10px; padding: 10px; background:var(--panel); border:1px solid var(--steel); border-radius:10px;">
+      <div class="field" style="margin-bottom:0; min-width:200px;">
+        <label>Fecha de la sesión <span style="color:var(--gold); margin-left:6px; font-weight:700;">${dayStr}</span></label>
+        <input type="date" value="${routineState[w].fecha||''}" id="weekDate" ${roAttr}>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="btn-danger" id="btnClearWeek">Limpiar Casillas</button>
+        <button type="button" class="btn-auth" id="btnForceSave" style="margin-bottom:0; padding:7px 15px; width:auto;">Guardar Cambios</button>
+      </div>
+    </div>`;
 
     const liftsHTML = LIFTS.map(lift => {
       const data = routineState[w][lift.key] || emptyLift();
       if(!data.accesorios) data.accesorios = [];
+      
+      // --- MEJORA: Rating Individual por Movimiento ---
+      const liftVal = data.valoracion || 0;
+      let liftPlates = '';
+      for(let i=1;i<=5;i++){ liftPlates += `<button type="button" class="plate-btn ${i<=liftVal?'filled':''}" data-lift-rating="${lift.key}" data-val="${i}"></button>`; }
+
+      // --- MEJORA: Fecha individual por movimiento ---
+      const liftDayStr = getWeekday(data.fecha);
 
       let accRows = '';
       data.accesorios.forEach((acc, idx) => {
@@ -658,29 +804,32 @@
           ${isCoach ? `<button type="button" class="btn-del-acc" data-lift="${lift.key}" data-accidx="${idx}">×</button>` : '<span></span>'}
         </div>`;
       });
-
       return `
       <section class="lift-card lift-${lift.color}">
-        <div class="lift-card-header"><span class="lift-icon">${lift.icon}</span><h2 class="lift-title">${lift.label}</h2></div>
-        
+        <div class="lift-card-header">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="lift-icon">${lift.icon}</span><h2 class="lift-title">${lift.label}</h2>
+          </div>
+          <div class="plate-rating" title="¿Cómo sentiste este movimiento?">${liftPlates}</div>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Fecha del movimiento <span style="color:var(--gold); margin-left:6px; font-weight:700;">${liftDayStr}</span></label>
+          <input type="date" value="${data.fecha||''}" data-lift="${lift.key}" data-field="fecha" ${roAttr}>
+        </div>
         <div class="field-group">
           <div class="field"><label>Series</label><input type="text" class="mono-input" value="${data.series||''}" data-lift="${lift.key}" data-field="series" ${roAttr}></div>
           <div class="field"><label>Reps</label><input type="text" class="mono-input" value="${data.reps||''}" data-lift="${lift.key}" data-field="reps" ${roAttr}></div>
           <div class="field"><label>Carga</label><input type="text" class="mono-input" value="${data.carga||''}" data-lift="${lift.key}" data-field="carga" ${roAttr}></div>
         </div>
-
         <div class="field-group-2">
           <div class="field"><label>Materiales</label><input type="text" value="${data.materiales||''}" data-lift="${lift.key}" data-field="materiales" placeholder="Cinto/Rodilleras" ${roAttr}></div>
           <div class="field"><label>Descanso</label><input type="text" value="${data.descanso||''}" data-lift="${lift.key}" data-field="descanso" placeholder="3-5 min" ${roAttr}></div>
         </div>
-
         <div class="field-group-2">
           <div class="field"><label>Método</label><input type="text" value="${data.metodo||''}" data-lift="${lift.key}" data-field="metodo" placeholder="RPE / Pausa" ${roAttr}></div>
           <div class="field"><label>Hype / Mentalidad</label><input type="text" value="${data.hype||''}" data-lift="${lift.key}" data-field="hype" placeholder="Alta activación" ${roAttr}></div>
         </div>
-
         <div class="field"><label>Notas del Entrenador</label><textarea rows="2" data-lift="${lift.key}" data-field="sugerencia" ${roAttr}>${data.sugerencia||''}</textarea></div>
-
         <div class="accessories-section">
           <div class="accessories-header">
             <span>Accesorios específicos</span>
@@ -690,28 +839,31 @@
         </div>
       </section>`;
     }).join('');
-
     const fb = routineState[w].feedback || { valoracion:0, comentario:'' };
     let plates='';
     for(let i=1;i<=5;i++){ plates+=`<button type="button" class="plate-btn ${i<=fb.valoracion?'filled':''}" data-val="${i}"></button>`; }
-    
     const fbHTML = `
     <section class="feedback-card">
-      <h2 style="color:var(--chalk); font-family:'Bebas Neue',sans-serif; font-size:22px; margin-top:0;">Feedback del Atleta (Semana ${w})</h2>
-      <div class="rating-row"><span style="font-size:12px; color:var(--chalk-dust); text-transform:uppercase;">Sensación</span><div class="plate-rating">${plates}</div></div>
-      <div class="field"><textarea rows="2" placeholder="Notas de fatiga, RPE, molestias..." id="fbComment">${fb.comentario||''}</textarea></div>
+      <h2 style="color:var(--chalk); font-family:'Bebas Neue',sans-serif; font-size:22px; margin-top:0;">Feedback Global (Semana ${w})</h2>
+      <div class="rating-row"><span style="font-size:12px; color:var(--chalk-dust); text-transform:uppercase;">Sensación General</span><div class="plate-rating">${plates}</div></div>
+      <div class="field"><textarea rows="2" placeholder="Notas de fatiga, RPE, molestias generales..." id="fbComment">${fb.comentario||''}</textarea></div>
     </section>`;
-
-    weekContent.innerHTML = `<div class="lifts-grid">${liftsHTML}</div>` + fbHTML;
+    weekContent.innerHTML = headerControlsHTML + `<div class="lifts-grid">${liftsHTML}</div>` + fbHTML;
   }
-
   // Inputs y Cambios
   weekContent.addEventListener('input', (e) => {
     const t = e.target;
+    // Guardar Fecha
+    if(t.id === 'weekDate' && !t.hasAttribute('readonly')) {
+      routineState[currentWeek].fecha = t.value;
+      renderWeek(currentWeek); // Para que se actualice el día de la semana
+      triggerSave();
+    }
     if(t.dataset.lift && t.dataset.field && !t.hasAttribute('readonly')) {
       if(!routineState[currentWeek][t.dataset.lift]) routineState[currentWeek][t.dataset.lift] = emptyLift();
       routineState[currentWeek][t.dataset.lift][t.dataset.field] = t.value;
       triggerSave();
+      if(t.dataset.field === 'fecha') { renderWeek(currentWeek); } // Actualiza el día de la semana del movimiento
     }
     if(t.dataset.lift && t.dataset.accfield && !t.hasAttribute('readonly')) {
       const idx = parseInt(t.dataset.accidx, 10);
@@ -724,9 +876,22 @@
       triggerSave();
     }
   });
-
-  // Botones + y - Accesorios y Sensación
+  // Botones + y - Accesorios, Sensación, Guardar y Limpiar
   weekContent.addEventListener('click', (e) => {
+    // --- MEJORA: Sistema Guardar y Limpiar ---
+    if(e.target.id === 'btnClearWeek') {
+      if(confirm("¿Estás seguro de que deseas limpiar y resetear todas las casillas de esta semana?")) {
+        routineState[currentWeek] = emptyWeek();
+        renderWeek(currentWeek);
+        triggerSave();
+      }
+      return;
+    }
+    if(e.target.id === 'btnForceSave') {
+      triggerSave();
+      return;
+    }
+
     const addBtn = e.target.closest('.btn-add-acc');
     if(addBtn) {
       const liftKey = addBtn.dataset.lift;
@@ -736,7 +901,6 @@
       triggerSave();
       return;
     }
-
     const delBtn = e.target.closest('.btn-del-acc');
     if(delBtn) {
       const liftKey = delBtn.dataset.lift;
@@ -746,17 +910,24 @@
       triggerSave();
       return;
     }
-
     const plateBtn = e.target.closest('.plate-btn');
     if(plateBtn) {
       const val = parseInt(plateBtn.dataset.val, 10);
-      if(!routineState[currentWeek].feedback) routineState[currentWeek].feedback = { valoracion:0, comentario:'' };
-      routineState[currentWeek].feedback.valoracion = val;
+      
+      // Diferenciar entre rating individual (movimiento) y rating general
+      if(plateBtn.hasAttribute('data-lift-rating')) {
+        const lKey = plateBtn.dataset.liftRating;
+        if(!routineState[currentWeek][lKey]) routineState[currentWeek][lKey] = emptyLift();
+        routineState[currentWeek][lKey].valoracion = val;
+      } else {
+        if(!routineState[currentWeek].feedback) routineState[currentWeek].feedback = { valoracion:0, comentario:'' };
+        routineState[currentWeek].feedback.valoracion = val;
+      }
+      
       renderWeek(currentWeek);
       triggerSave();
     }
   });
-
   // Render Biblioteca Accesorios (Imágenes)
   function renderLibrary() {
     const grid = document.getElementById('libraryGrid');
@@ -773,18 +944,73 @@
       </div>
     `).join('');
   }
+  // CALCULADORAS
+  
+  // --- MEJORA: Calculadora de Porcentajes ---
+  document.getElementById('calcPercWeight').addEventListener('input', (e) => {
+    const w = parseFloat(e.target.value) || 0;
+    document.getElementById('res90').innerText = (w * 0.9).toFixed(2);
+    document.getElementById('res80').innerText = (w * 0.8).toFixed(2);
+    document.getElementById('res70').innerText = (w * 0.7).toFixed(2);
+    document.getElementById('res60').innerText = (w * 0.6).toFixed(2);
+  });
 
-  // CALCULADORA
+  // --- MEJORA: Calculadora de Superávit / Déficit Calórico y MACROS ---
+  document.getElementById('btnCalcCalories').addEventListener('click', () => {
+    const weight = parseFloat(document.getElementById('calcCalWeight').value);
+    const height = parseFloat(document.getElementById('calcCalHeight').value);
+    const age = parseFloat(document.getElementById('calcCalAge').value);
+    const gender = document.getElementById('calcCalGender').value;
+    const activity = parseFloat(document.getElementById('calcCalActivity').value);
+    const goal = document.getElementById('calcCalGoal').value;
+    if(!weight || !height || !age || weight <= 0 || height <= 0 || age <= 0) {
+      alert("Por favor ingresa datos válidos de peso, altura y edad.");
+      return;
+    }
+    // Fórmula de Mifflin-St Jeor para Metabolismo Basal (BMR)
+    let bmr;
+    if(gender === 'male') {
+      bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+    } else {
+      bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+    }
+    const tdee = bmr * activity;
+    let target = tdee;
+    let goalLabel = "Calorías Objetivo (Mantenimiento)";
+    if(goal === 'loss') {
+      target = tdee - 500;
+      goalLabel = "Calorías Objetivo (Déficit)";
+    } else if(goal === 'gain') {
+      target = tdee + 300;
+      goalLabel = "Calorías Objetivo (Superávit)";
+    }
+    document.getElementById('resBMR').innerText = Math.round(bmr);
+    document.getElementById('resTDEE').innerText = Math.round(tdee);
+    document.getElementById('resCalGoalLabel').innerText = goalLabel;
+    document.getElementById('resCalGoal').innerText = Math.max(0, Math.round(target));
+
+    // INICIO DE MODIFICACIÓN: CÁLCULO DE MACROS
+    const protein = Math.round(weight * 2.2); 
+    const fat = Math.round(weight * 1.0); 
+    const proteinCals = protein * 4;
+    const fatCals = fat * 9;
+    const carbCals = target - proteinCals - fatCals;
+    const carbs = Math.max(0, Math.round(carbCals / 4));
+
+    document.getElementById('resProt').innerText = protein;
+    document.getElementById('resCarbs').innerText = carbs;
+    document.getElementById('resFats').innerText = fat;
+    // FIN DE MODIFICACIÓN: CÁLCULO DE MACROS
+  });
+
   document.getElementById('btnCalculate').addEventListener('click', () => {
     const bw = parseFloat(document.getElementById('calcBw').value);
     const total = parseFloat(document.getElementById('calcTotal').value);
     const gender = document.getElementById('calcGender').value;
-
     if(!bw || !total || bw <= 0 || total <= 0) {
       alert("Por favor ingresa datos válidos de peso y total.");
       return;
     }
-
     // Puntos DOTS
     let dotsCoeff = 0;
     if(gender === 'male') {
@@ -797,7 +1023,6 @@
       dotsCoeff = 500 / denom;
     }
     document.getElementById('resDots').innerText = (total * dotsCoeff).toFixed(2);
-
     // Puntos Wilks
     let wilksCoeff = 0;
     if(gender === 'male') {
@@ -810,7 +1035,6 @@
       wilksCoeff = 500 / denom;
     }
     document.getElementById('resWilks').innerText = (total * wilksCoeff).toFixed(2);
-
     // IPF GL Points
     let glA = 0, glB = 0, glC = 0;
     if(gender === 'male') { glA = 1199.72839; glB = 1025.18162; glC = 0.00921; }
