@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.omarrojas99_esp.twa",
+        "sha256_cert_fingerprints": ["AE:2F:32:4D:29:93:B4:32:CA:23:75:95:93:0E:7C:65:3A:FF:22:BA:BE:01:F4:58:BB:86:63:55:31:24:8B:4C"]
+      }
+    }]
