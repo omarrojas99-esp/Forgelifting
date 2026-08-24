@@ -1,4 +1,4 @@
-const CACHE_NAME = 'forgelifting-v3';
+const CACHE_NAME = 'forgelifting-v4';
 const ASSETS = [
   './',
   './index.html',
