@@ -3,6 +3,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "io.github.omarrojas99_esp.twa",
-        "sha256_cert_fingerprints": ["AE:2F:32:4D:29:93:B4:32:CA:23:75:95:93:0E:7C:65:3A:FF:22:BA:BE:01:F4:58:BB:86:63:55:31:24:8B:4C"]
+        "sha256_cert_fingerprints": ["88:BF:1F:32:CE:C9:D2:88:A4:41:A5:EF:B1:EC:0A:CB:C6:80:60:39:88:32:AC:E8:3E:32:72:B8:3E:76:95:F0"]
       }
     }]
