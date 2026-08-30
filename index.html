@@ -60,6 +60,16 @@
   .week-tab-ring{ width:44px;height:44px;border-radius:50%; background:var(--steel); display:flex;align-items:center;justify-content:center; }
   .week-tab.active .week-tab-ring{ background: var(--gold); }
   .week-tab-num{ width:36px;height:36px;border-radius:50%;background:var(--panel); display:flex;align-items:center;justify-content:center; font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--chalk); }
+  /* Pestañas de Bloques de Planificación */
+  .block-tabs-bar{ display:flex; gap:10px; overflow-x:auto; padding:4px 0 14px; margin-bottom:8px; border-bottom:1px solid var(--steel); align-items:center; }
+  .block-tab{ position:relative; display:flex; align-items:center; gap:8px; background:var(--panel); border:1px solid var(--steel); color:var(--chalk-dust); font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:.04em; padding:8px 14px; border-radius:8px; cursor:pointer; white-space:nowrap; flex:0 0 auto; transition:all .15s ease; }
+  .block-tab:hover{ color:var(--chalk); border-color:var(--chalk-dust); }
+  .block-tab.active{ color:var(--ink); background:var(--gold); border-color:var(--gold); }
+  .block-rename-icon{ opacity:.65; font-size:12px; padding:2px; border-radius:4px; }
+  .block-tab:hover .block-rename-icon{ opacity:1; }
+  .block-tab.active .block-rename-icon:hover{ background:rgba(21,22,27,0.2); }
+  .btn-add-block{ background:transparent; border:1px dashed var(--gold); color:var(--gold); font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:.04em; padding:8px 14px; border-radius:8px; cursor:pointer; white-space:nowrap; flex:0 0 auto; }
+  .btn-add-block:hover{ background:rgba(212,175,55,0.12); }
   .lifts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-bottom:18px;}
   .lift-card{ --lift-color:var(--steel); background:var(--panel);border:1px solid var(--steel);border-top:3px solid var(--lift-color); border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px; }
   .lift-card.lift-blue{--lift-color:var(--plate-blue);}
@@ -100,6 +110,20 @@
   .calc-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--gold); margin-top: 0; margin-bottom: 15px; }
   .calc-res-box { background: var(--ink); border: 1px solid var(--steel); border-radius: 6px; padding: 12px; text-align: center; margin-top: 15px; }
   .calc-res-val { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: bold; color: var(--gold); }
+  /* Calculadora de Intentos */
+  .attempt-row-block{ margin-bottom:20px; }
+  .attempt-row-title{ font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:.06em; text-transform:uppercase; color:var(--chalk-dust); margin:0 0 10px; }
+  .attempt-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; }
+  .attempt-box{ background:var(--ink); border:1px solid var(--steel); border-radius:8px; padding:12px; display:flex; align-items:center; gap:12px; }
+  .attempt-pct{ width:40px; height:40px; border-radius:50%; background:var(--steel); color:var(--chalk); display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700; flex-shrink:0; }
+  .attempt-box.is-target{ border-color:var(--gold); }
+  .attempt-box.is-target .attempt-pct{ background:var(--gold); color:var(--ink); }
+  .attempt-kg{ font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; color:var(--chalk); line-height:1.15; }
+  .attempt-lb{ font-size:11.5px; color:var(--chalk-dust); }
+  .attempt-tips{ margin-top:14px; border-top:1px dashed var(--steel); padding-top:16px; font-size:12.5px; color:var(--chalk-dust); line-height:1.55; }
+  .attempt-tips strong{ display:block; color:var(--chalk); margin-bottom:8px; font-size:13.5px; }
+  .attempt-tips ul{ margin:0; padding-left:18px; }
+  .attempt-tips li{ margin-bottom:6px; }
   /* Biblioteca de Accesorios & Vlogs */
   .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
   .exercise-card { background: var(--panel); border: 1px solid var(--steel); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -170,6 +194,7 @@
   </nav>
   <!-- SECCIÓN PLANIFICACIÓN -->
   <div id="sec-planification" class="app-section">
+    <nav class="block-tabs-bar" id="blockTabs"></nav>
     <nav class="week-tabs" id="weekTabs"></nav>
     <main id="weekContent" style="margin-top: 10px;"></main>
   </div>
@@ -417,6 +442,41 @@
           <div class="calc-res-val" id="resGL">0.00</div>
         </div>
       </div>
+
+      <!-- CALCULADORA DE INTENTOS (NUEVA) -->
+      <div class="calc-card" style="grid-column: 1 / -1;">
+        <h3>Calculadora de Intentos</h3>
+        <div class="field" style="margin-bottom: 15px; max-width: 260px;">
+          <label>Tercer Intento Proyectado (KG)</label>
+          <input type="number" id="calcAttemptWeight" placeholder="Ej. 280" step="0.5">
+        </div>
+        <button type="button" id="btnCalcAttempts" class="btn-auth" style="margin-bottom: 20px; max-width: 260px;">Obtener Mis Intentos</button>
+        <div id="attemptsResult" style="display:none;">
+          <div class="attempt-row-block">
+            <h4 class="attempt-row-title">Primer Intento</h4>
+            <div class="attempt-grid" id="attemptRow1"></div>
+          </div>
+          <div class="attempt-row-block">
+            <h4 class="attempt-row-title">Segundo Intento</h4>
+            <div class="attempt-grid" id="attemptRow2"></div>
+          </div>
+          <div class="attempt-row-block">
+            <h4 class="attempt-row-title">Tercer Intento</h4>
+            <div class="attempt-grid" id="attemptRow3"></div>
+          </div>
+        </div>
+        <div class="attempt-tips">
+          <strong>Cosas a tener en cuenta</strong>
+          <ul>
+            <li>Siéntete libre de ignorar estas selecciones.</li>
+            <li>Se muestran 3 opciones por intento. Elige la que prefieras según cómo te sientas ese día.</li>
+            <li>El primer intento debe ser un peso que puedas hacer para un triple.</li>
+            <li>El press banca te sorprende. Planifica saltos más pequeños.</li>
+            <li>¡Un PR de 2.5kg es mejor que un intento fallido, y suman con el tiempo!</li>
+            <li>Tómate tu tiempo y escucha los comandos. ¡Lo vas a hacer genial!</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
   <!-- SECCIÓN BIBLIOTECA DE ACCESORIOS (IMÁGENES) -->
@@ -469,6 +529,7 @@
   let isCoach = false;
   let currentViewedAthleteId = null;
   let routineState = {}; 
+  let currentBlockId = null;
   let currentWeek = 1;
   let saveTimeout = null;
   let athletesMeta = {};
@@ -491,27 +552,32 @@
 
   function checkNotifications(routine) {
     if (!("Notification" in window) || Notification.permission !== "granted") return;
-    
+    if (!routine.blockOrder) return;
+
     const today = new Date().toISOString().split('T')[0]; // Fecha actual YYYY-MM-DD
     const notifiedKey = 'forgelifting_notified_' + today;
     let notifiedLifts = JSON.parse(localStorage.getItem(notifiedKey) || '[]');
 
-    for (let w = 1; w <= 8; w++) {
-      if (!routine[w]) continue;
-      LIFTS.forEach(lift => {
-        const liftData = routine[w][lift.key];
-        if (liftData && liftData.fecha === today) {
-          const liftId = `${w}-${lift.key}`;
-          if (!notifiedLifts.includes(liftId)) {
-            new Notification("Forgelifting - ¡Día de Entrenamiento!", {
-              body: `Hoy te corresponde realizar: ${lift.label} (Semana ${w})`,
-              icon: "logo.png"
-            });
-            notifiedLifts.push(liftId);
+    routine.blockOrder.forEach(blockId => {
+      const block = routine.blocks[blockId];
+      if (!block || !block.weeks) return;
+      for (let w = 1; w <= 8; w++) {
+        if (!block.weeks[w]) continue;
+        LIFTS.forEach(lift => {
+          const liftData = block.weeks[w][lift.key];
+          if (liftData && liftData.fecha === today) {
+            const liftId = `${blockId}-${w}-${lift.key}`;
+            if (!notifiedLifts.includes(liftId)) {
+              new Notification("Forgelifting - ¡Día de Entrenamiento!", {
+                body: `Hoy te corresponde realizar: ${lift.label} (${block.name || 'Bloque'}, Semana ${w})`,
+                icon: "logo.png"
+              });
+              notifiedLifts.push(liftId);
+            }
           }
-        }
-      });
-    }
+        });
+      }
+    });
     localStorage.setItem(notifiedKey, JSON.stringify(notifiedLifts));
   }
   // FIN DE MODIFICACIÓN: FUNCIONES PARA NOTIFICACIONES PUSH
@@ -588,10 +654,41 @@
       feedback:{ valoracion:0, comentario:'' } 
     }; 
   }
-  function generateEmptyRoutine(){ 
-    const rut = {}; 
-    for(let w=1; w<=8; w++) rut[w] = emptyWeek(); 
-    return rut; 
+  function generateEmptyWeeks(){
+    const rut = {};
+    for(let w=1; w<=8; w++) rut[w] = emptyWeek();
+    return rut;
+  }
+  function makeBlockId(){
+    return 'block_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+  }
+  // --- MEJORA: Sistema de Bloques de Planificación ---
+  // Estructura nueva: { blocks: { id: { name, weeks:{1..8} } }, blockOrder:[id,...], activeBlockId }
+  function generateEmptyRoutine(){
+    const id = makeBlockId();
+    return {
+      blocks: { [id]: { name: 'Bloque 1', weeks: generateEmptyWeeks() } },
+      blockOrder: [id],
+      activeBlockId: id
+    };
+  }
+  // Convierte una rutina en formato antiguo (semanas 1-8 en la raíz) al nuevo formato de bloques
+  function migrateRoutineIfNeeded(raw){
+    if(raw && raw.blocks && raw.blockOrder && raw.blockOrder.length) return raw;
+    const id = makeBlockId();
+    const weeks = {};
+    for(let w=1; w<=8; w++){
+      weeks[w] = (raw && raw[w]) ? raw[w] : emptyWeek();
+    }
+    return { blocks: { [id]: { name: 'Bloque 1', weeks } }, blockOrder: [id], activeBlockId: id };
+  }
+  // Devuelve el objeto de semanas (1-8) del bloque actualmente seleccionado
+  function activeWeeks(){
+    if(!routineState.blocks || !routineState.blocks[currentBlockId]){
+      const id = (routineState.blockOrder && routineState.blockOrder[0]) || null;
+      currentBlockId = id;
+    }
+    return routineState.blocks[currentBlockId].weeks;
   }
 
   // Utilidad para mostrar el día de la semana
@@ -650,6 +747,8 @@
       if (isCoach) {
         coachPanel.style.display = 'flex';
         await loadAthletesList();
+        document.getElementById('blockTabs').innerHTML = '';
+        document.getElementById('weekTabs').innerHTML = '';
         weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Selecciona un atleta arriba para ver o asignar su rutina.</p>';
       } else {
         coachPanel.style.display = 'none';
@@ -687,6 +786,8 @@
       await fetchRoutine(currentViewedAthleteId);
     } else {
       document.getElementById('editAthleteName').value = '';
+      document.getElementById('blockTabs').innerHTML = '';
+      document.getElementById('weekTabs').innerHTML = '';
       weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Selecciona un atleta arriba.</p>';
     }
   });
@@ -710,6 +811,8 @@
         currentViewedAthleteId = null;
         document.getElementById('editAthleteName').value = '';
         await loadAthletesList();
+        document.getElementById('blockTabs').innerHTML = '';
+        document.getElementById('weekTabs').innerHTML = '';
         weekContent.innerHTML = '<p style="text-align:center; color: var(--chalk-dust); padding:40px 0;">Selecciona un atleta arriba.</p>';
       } catch(err) { alert("Error al eliminar el atleta."); }
     }
@@ -719,12 +822,25 @@
     try {
       const docRef = doc(db, "routines", uid);
       const docSnap = await getDoc(docRef);
+      let needsSave = false;
       if (docSnap.exists()) {
-        routineState = docSnap.data();
+        const raw = docSnap.data();
+        if(raw && raw.blocks && raw.blockOrder && raw.blockOrder.length){
+          routineState = raw;
+        } else {
+          routineState = migrateRoutineIfNeeded(raw);
+          needsSave = true;
+        }
       } else {
         routineState = generateEmptyRoutine();
-        if(isCoach) await setDoc(docRef, routineState);
+        needsSave = true;
       }
+      if(isCoach && needsSave) await setDoc(docRef, routineState);
+      currentBlockId = (routineState.activeBlockId && routineState.blocks[routineState.activeBlockId])
+        ? routineState.activeBlockId
+        : routineState.blockOrder[0];
+      currentWeek = 1;
+      renderBlockTabs();
       renderTabs();
       renderWeek(currentWeek);
       
@@ -764,17 +880,83 @@
     renderTabs();
     renderWeek(currentWeek);
   });
+  // --- MEJORA: Pestañas de Bloques de Planificación ---
+  function renderBlockTabs(){
+    const wrap = document.getElementById('blockTabs');
+    if(!wrap) return;
+    if(!routineState.blockOrder){ wrap.innerHTML = ''; return; }
+    let html = '';
+    routineState.blockOrder.forEach(id => {
+      const block = routineState.blocks[id];
+      if(!block) return;
+      const active = id === currentBlockId;
+      html += `<button type="button" class="block-tab ${active?'active':''}" data-block="${id}">
+        <span class="block-tab-name">${block.name || 'Bloque'}</span>
+        ${isCoach ? `<span class="block-rename-icon" data-rename-block="${id}" title="Renombrar bloque">&#9998;</span>` : ''}
+      </button>`;
+    });
+    if(isCoach){
+      html += `<button type="button" class="btn-add-block" id="btnAddBlock">+ Nuevo Bloque</button>`;
+    }
+    wrap.innerHTML = html;
+  }
+  document.getElementById('blockTabs').addEventListener('click', (e) => {
+    // Renombrar bloque (solo entrenador)
+    const renameIcon = e.target.closest('[data-rename-block]');
+    if(renameIcon){
+      if(!isCoach) return;
+      const id = renameIcon.dataset.renameBlock;
+      const block = routineState.blocks[id];
+      const newName = prompt("Nuevo nombre del bloque:", block.name || '');
+      if(newName && newName.trim()){
+        block.name = newName.trim();
+        renderBlockTabs();
+        triggerSave();
+      }
+      return;
+    }
+    // Crear un nuevo bloque (solo entrenador)
+    if(e.target.id === 'btnAddBlock'){
+      if(!isCoach) return;
+      const defaultName = `Bloque ${routineState.blockOrder.length + 1}`;
+      const name = prompt("Nombre del nuevo bloque:", defaultName);
+      if(name && name.trim()){
+        const id = makeBlockId();
+        routineState.blocks[id] = { name: name.trim(), weeks: generateEmptyWeeks() };
+        routineState.blockOrder.push(id);
+        currentBlockId = id;
+        routineState.activeBlockId = id;
+        currentWeek = 1;
+        renderBlockTabs();
+        renderTabs();
+        renderWeek(currentWeek);
+        triggerSave();
+      }
+      return;
+    }
+    // Cambiar de bloque (entrenador y atletas pueden ver)
+    const tabBtn = e.target.closest('.block-tab');
+    if(tabBtn){
+      currentBlockId = tabBtn.dataset.block;
+      routineState.activeBlockId = currentBlockId;
+      currentWeek = 1;
+      renderBlockTabs();
+      renderTabs();
+      renderWeek(currentWeek);
+    }
+  });
   function renderWeek(w) {
-    if(!routineState[w]) routineState[w] = emptyWeek();
+    const weeks = activeWeeks();
+    if(!weeks[w]) weeks[w] = emptyWeek();
     const roAttr = isCoach ? '' : 'readonly';
     
     // --- MEJORA: Cabecera con Calendario, Guardar y Limpiar ---
-    const dayStr = getWeekday(routineState[w].fecha);
+    const dayStr = getWeekday(weeks[w].fecha);
     const headerControlsHTML = `
     <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:15px; flex-wrap:wrap; gap:10px; padding: 10px; background:var(--panel); border:1px solid var(--steel); border-radius:10px;">
       <div class="field" style="margin-bottom:0; min-width:200px;">
         <label>Fecha de la sesión <span style="color:var(--gold); margin-left:6px; font-weight:700;">${dayStr}</span></label>
-        <input type="date" value="${routineState[w].fecha||''}" id="weekDate" ${roAttr}>
+        <input type="date" value="${weeks[w].fecha||''}" id="weekDate" ${roAttr}>
       </div>
       <div style="display:flex; gap:10px;">
         <button type="button" class="btn-danger" id="btnClearWeek">Limpiar Casillas</button>
@@ -783,7 +965,7 @@
     </div>`;
 
     const liftsHTML = LIFTS.map(lift => {
-      const data = routineState[w][lift.key] || emptyLift();
+      const data = weeks[w][lift.key] || emptyLift();
       if(!data.accesorios) data.accesorios = [];
       
       // --- MEJORA: Rating Individual por Movimiento ---
@@ -839,7 +1021,7 @@
         </div>
       </section>`;
     }).join('');
-    const fb = routineState[w].feedback || { valoracion:0, comentario:'' };
+    const fb = weeks[w].feedback || { valoracion:0, comentario:'' };
     let plates='';
     for(let i=1;i<=5;i++){ plates+=`<button type="button" class="plate-btn ${i<=fb.valoracion?'filled':''}" data-val="${i}"></button>`; }
     const fbHTML = `
@@ -853,35 +1035,37 @@
   // Inputs y Cambios
   weekContent.addEventListener('input', (e) => {
     const t = e.target;
+    const weeks = activeWeeks();
     // Guardar Fecha
     if(t.id === 'weekDate' && !t.hasAttribute('readonly')) {
-      routineState[currentWeek].fecha = t.value;
+      weeks[currentWeek].fecha = t.value;
       renderWeek(currentWeek); // Para que se actualice el día de la semana
       triggerSave();
     }
     if(t.dataset.lift && t.dataset.field && !t.hasAttribute('readonly')) {
-      if(!routineState[currentWeek][t.dataset.lift]) routineState[currentWeek][t.dataset.lift] = emptyLift();
-      routineState[currentWeek][t.dataset.lift][t.dataset.field] = t.value;
+      if(!weeks[currentWeek][t.dataset.lift]) weeks[currentWeek][t.dataset.lift] = emptyLift();
+      weeks[currentWeek][t.dataset.lift][t.dataset.field] = t.value;
       triggerSave();
       if(t.dataset.field === 'fecha') { renderWeek(currentWeek); } // Actualiza el día de la semana del movimiento
     }
     if(t.dataset.lift && t.dataset.accfield && !t.hasAttribute('readonly')) {
       const idx = parseInt(t.dataset.accidx, 10);
-      routineState[currentWeek][t.dataset.lift].accesorios[idx][t.dataset.accfield] = t.value;
+      weeks[currentWeek][t.dataset.lift].accesorios[idx][t.dataset.accfield] = t.value;
       triggerSave();
     }
     if(t.id === 'fbComment') {
-      if(!routineState[currentWeek].feedback) routineState[currentWeek].feedback = { valoracion:0, comentario:'' };
-      routineState[currentWeek].feedback.comentario = t.value;
+      if(!weeks[currentWeek].feedback) weeks[currentWeek].feedback = { valoracion:0, comentario:'' };
+      weeks[currentWeek].feedback.comentario = t.value;
       triggerSave();
     }
   });
   // Botones + y - Accesorios, Sensación, Guardar y Limpiar
   weekContent.addEventListener('click', (e) => {
+    const weeks = activeWeeks();
     // --- MEJORA: Sistema Guardar y Limpiar ---
     if(e.target.id === 'btnClearWeek') {
       if(confirm("¿Estás seguro de que deseas limpiar y resetear todas las casillas de esta semana?")) {
-        routineState[currentWeek] = emptyWeek();
+        weeks[currentWeek] = emptyWeek();
         renderWeek(currentWeek);
         triggerSave();
       }
@@ -895,8 +1079,8 @@
     const addBtn = e.target.closest('.btn-add-acc');
     if(addBtn) {
       const liftKey = addBtn.dataset.lift;
-      if(!routineState[currentWeek][liftKey].accesorios) routineState[currentWeek][liftKey].accesorios = [];
-      routineState[currentWeek][liftKey].accesorios.push({ nombre:'', series:'', reps:'' });
+      if(!weeks[currentWeek][liftKey].accesorios) weeks[currentWeek][liftKey].accesorios = [];
+      weeks[currentWeek][liftKey].accesorios.push({ nombre:'', series:'', reps:'' });
       renderWeek(currentWeek);
       triggerSave();
       return;
@@ -905,7 +1089,7 @@
     if(delBtn) {
       const liftKey = delBtn.dataset.lift;
       const idx = parseInt(delBtn.dataset.accidx, 10);
-      routineState[currentWeek][liftKey].accesorios.splice(idx, 1);
+      weeks[currentWeek][liftKey].accesorios.splice(idx, 1);
       renderWeek(currentWeek);
       triggerSave();
       return;
@@ -917,11 +1101,11 @@
       // Diferenciar entre rating individual (movimiento) y rating general
       if(plateBtn.hasAttribute('data-lift-rating')) {
         const lKey = plateBtn.dataset.liftRating;
-        if(!routineState[currentWeek][lKey]) routineState[currentWeek][lKey] = emptyLift();
-        routineState[currentWeek][lKey].valoracion = val;
+        if(!weeks[currentWeek][lKey]) weeks[currentWeek][lKey] = emptyLift();
+        weeks[currentWeek][lKey].valoracion = val;
       } else {
-        if(!routineState[currentWeek].feedback) routineState[currentWeek].feedback = { valoracion:0, comentario:'' };
-        routineState[currentWeek].feedback.valoracion = val;
+        if(!weeks[currentWeek].feedback) weeks[currentWeek].feedback = { valoracion:0, comentario:'' };
+        weeks[currentWeek].feedback.valoracion = val;
       }
       
       renderWeek(currentWeek);
@@ -1041,6 +1225,42 @@
     else { glA = 610.82796; glB = 1063.22813; glC = 0.01316; }
     const glPoints = 100 * total / (glA - glB * Math.exp(-glC * bw));
     document.getElementById('resGL').innerText = Math.max(0, glPoints).toFixed(2);
+  });
+
+  // --- MEJORA: Calculadora de Intentos ---
+  document.getElementById('btnCalcAttempts').addEventListener('click', () => {
+    const target = parseFloat(document.getElementById('calcAttemptWeight').value);
+    if(!target || target <= 0) {
+      alert("Por favor ingresa un peso válido para tu tercer intento proyectado.");
+      return;
+    }
+    const KG_TO_LB = 2.20462;
+    function formatKg(kg){
+      return Number.isInteger(kg) ? String(kg) : kg.toFixed(1);
+    }
+    function calcAttempt(pct){
+      const raw = target * (pct / 100);
+      const kg = Math.floor(raw / 2.5) * 2.5;
+      const lb = kg * KG_TO_LB;
+      return { pct, kg, lb };
+    }
+    function renderRow(containerId, percentages){
+      const box = document.getElementById(containerId);
+      box.innerHTML = percentages.map(pct => {
+        const { kg, lb } = calcAttempt(pct);
+        return `<div class="attempt-box ${pct===100?'is-target':''}">
+          <span class="attempt-pct">${pct}%</span>
+          <div>
+            <div class="attempt-kg">${formatKg(kg)}kg</div>
+            <div class="attempt-lb">${lb.toFixed(1)}lb</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    renderRow('attemptRow1', [90, 91, 92]);
+    renderRow('attemptRow2', [95, 96, 97]);
+    renderRow('attemptRow3', [99, 100, 102]);
+    document.getElementById('attemptsResult').style.display = 'block';
   });
 </script>
 </body>
